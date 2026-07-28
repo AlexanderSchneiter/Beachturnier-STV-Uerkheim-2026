@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#00A032">
+<title>Beachvolleyball-Turnier · Spielplan</title>
+<meta name="description" content="Spielplan, Resultate und Rangliste des Beachvolleyball-Turniers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,700;1,800&family=Archivo+Narrow:wght@500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Direkt aus der Vereinsseite gemessen */
+  --green:#00A032;        /* Kopf- und Fussbalken, Kachelbeschriftungen */
+  --green-d:#00801F;      /* dunkler, fuer kleine weisse Schrift und Buttons */
+  --green-dd:#00661A;
+  --green-l:#26AE51;      /* helleres Grün der Seite */
+  --green-pale:#E9F6EC;
+  --olive:#9EC265;        /* aus dem Beachturnier-Plakat des Vereins */
+  --cream:#FCF2D6;        /* ebenfalls aus dem Plakat */
+  --sun:#F2A11B; --sun-d:#8A5A00;   /* Signalfarbe fuer «läuft jetzt» */
+
+  --paper:#FFFFFF; --bg:#F1F1F2; --soft:#FAFAFB; --soft2:#EBECED;
+  --ink:#1E2223; --ink-2:#474D4E; --muted:#666D6F; --line:#DADDDE;
+
+  --sans:'Archivo','Segoe UI',Roboto,system-ui,sans-serif;
+  --cond:'Archivo Narrow','Roboto Condensed','Arial Narrow',var(--sans);
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --r:10px; --r-s:7px;
+  --sh:0 1px 2px rgba(30,34,35,.06), 0 3px 12px rgba(30,34,35,.05);
+  --sh-1:0 1px 2px rgba(30,34,35,.07);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:15px;
+  line-height:1.5; -webkit-text-size-adjust:100%; padding-bottom:44px;
+}
+h1,h2,h3{font-family:var(--cond); margin:0; font-weight:700; letter-spacing:-.004em}
+.mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
+:focus-visible{outline:3px solid var(--ink); outline-offset:2px}
+
+/* ---------- Kopf: flaches Vereinsgrün wie auf der Website ---------- */
+.top{
+  position:sticky; top:0; z-index:40; color:#fff; background:var(--green);
+  border-bottom:3px solid var(--green-d);
+  padding:9px 14px 10px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+}
+.brand{flex:1 1 auto; min-width:0}
+/* Wortmarke: schwere, schräggestellte Versalien wie im Vereinslogo */
+.topline{display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:4px}
+.eyebrow{display:inline-flex; align-items:center; font-family:var(--sans); font-weight:800;
+  font-style:italic; font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:#fff;
+  background:rgba(0,0,0,.2); padding:3px 9px 3px 8px; border-radius:4px}
+.top h1{font-size:21px; line-height:1.1; color:#fff}
+.top .sub{font-size:11px; color:#fff; font-family:var(--mono); background:rgba(0,0,0,.2);
+  padding:3px 8px; border-radius:4px}
+.top .sub:empty{display:none}
+.chips{display:flex; gap:6px; flex:0 0 auto; align-items:center}
+.chip{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.05em; text-transform:uppercase;
+  padding:5px 9px; border-radius:99px; background:rgba(0,0,0,.24); color:#fff; white-space:nowrap;
+}
+.chip.edit{background:var(--sun); color:#3A2600; font-weight:600}
+.chip.warn{background:#7A1B00}
+.chip button{all:unset; cursor:pointer}
+.chip button:focus-visible{outline:2px solid #fff; outline-offset:2px}
+
+/* ---------- Navigation ---------- */
+nav{
+  position:sticky; top:var(--navtop,62px); z-index:35; background:var(--paper);
+  border-bottom:1px solid var(--line); display:flex; overflow-x:auto;
+  scrollbar-width:none; padding:0 6px; box-shadow:var(--sh-1);
+}
+nav::-webkit-scrollbar{display:none}
+nav button{
+  all:unset; cursor:pointer; padding:13px 14px 10px; font-family:var(--cond);
+  font-size:15px; font-weight:600; color:var(--muted); white-space:nowrap;
+  border-bottom:3px solid transparent; min-height:44px; display:flex; align-items:center;
+}
+nav button:hover{color:var(--ink)}
+nav button[aria-current="true"]{color:var(--green-dd); border-bottom-color:var(--green)}
+nav button:focus-visible{outline:2px solid var(--ink); outline-offset:-4px}
+
+main{max-width:1020px; margin:0 auto; padding:16px 12px 64px}
+section{margin-bottom:24px}
+.hd{display:flex; align-items:baseline; gap:10px; margin:0 2px 9px; flex-wrap:wrap}
+.hd h2{font-size:20px}
+.hd .note{font-size:11.5px; color:var(--muted); font-family:var(--mono)}
+
+/* ---------- Tagesband ---------- */
+.ribbon{background:var(--paper); border:1px solid var(--line); border-radius:var(--r);
+  padding:13px 14px 11px; margin-bottom:16px; box-shadow:var(--sh)}
+.ribbon .cap{display:flex; align-items:baseline; gap:9px; margin-bottom:9px}
+.ribbon .cap h2{font-size:15px}
+.ribbon .cap .prog{margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--muted)}
+.ribbon .bars{display:flex; height:30px; border-radius:var(--r-s); overflow:hidden;
+  position:relative; background:var(--soft2)}
+.ribbon .seg{position:relative; display:flex; align-items:center; justify-content:center;
+  min-width:0; font-family:var(--cond); font-size:11.5px; font-weight:700; letter-spacing:.05em;
+  text-transform:uppercase; color:#fff; overflow:hidden}
+.ribbon .seg + .seg{border-left:2px solid var(--paper)}
+.ribbon .seg.a{background:var(--green)}
+.ribbon .seg.l{background:var(--soft2); color:var(--ink-2)}
+.ribbon .seg.b{background:var(--green-dd)}
+.ribbon .seg.f{background:var(--olive); color:#243109}
+.ribbon .now{position:absolute; top:-4px; bottom:-4px; width:2px; background:var(--ink); z-index:2}
+.ribbon .now::after{content:''; position:absolute; top:-4px; left:-3px; width:8px; height:8px;
+  background:var(--ink); border-radius:99px}
+.ribbon .lbl{display:flex; justify-content:space-between; font-family:var(--mono);
+  font-size:10.5px; color:var(--muted); margin-top:7px; gap:8px}
+.ribbon .track{height:4px; border-radius:99px; background:var(--soft2); margin-top:10px; overflow:hidden}
+.ribbon .track i{display:block; height:100%; background:var(--green); border-radius:99px}
+
+/* ---------- Spielkarten ---------- */
+.card{background:var(--paper); border:1px solid var(--line); border-radius:var(--r);
+  overflow:hidden; box-shadow:var(--sh)}
+.match{
+  display:grid; grid-template-columns:56px 1fr auto; gap:12px; align-items:center;
+  padding:11px 13px; border-top:1px solid var(--line); background:var(--paper); width:100%;
+  text-align:left; font:inherit; color:inherit; border-left:0; border-right:0; border-bottom:0;
+  position:relative;
+}
+.match:first-child{border-top:0}
+button.match{cursor:pointer}
+button.match::before{content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+  background:var(--green); opacity:0; transition:opacity .14s ease}
+button.match:hover{background:var(--soft)}
+button.match:hover::before{opacity:1}
+button.match:focus-visible{outline:2px solid var(--ink); outline-offset:-2px}
+.match .when{font-family:var(--mono); font-size:13px; line-height:1.25; font-weight:600}
+.match .when .ct{font-size:9.5px; color:var(--muted); letter-spacing:.06em; font-weight:400;
+  text-transform:uppercase; margin-top:1px}
+.match .who{min-width:0; font-family:var(--cond); font-size:16.5px; line-height:1.3; font-weight:500}
+.match .who span{display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.match .who .vs{font-family:var(--mono); font-size:9px; color:var(--muted); letter-spacing:.14em;
+  text-transform:uppercase; margin:1px 0}
+.match .who b{font-weight:700; color:var(--green-dd)}
+.match .sc{font-family:var(--mono); font-size:17px; font-weight:600; text-align:right;
+  white-space:nowrap; padding:4px 9px; border-radius:var(--r-s); background:var(--soft2);
+  font-variant-numeric:tabular-nums}
+.match .sc.empty{color:var(--muted); background:transparent; font-size:15px; padding-right:2px}
+.match.live{background:var(--cream)}
+.match.live::after{content:''; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--sun)}
+.match.live .when{color:var(--sun-d)}
+
+/* Beschriftungsbalken wie die Kacheln der Vereinsseite */
+.roundhead{
+  font-family:var(--cond); font-size:11px; font-weight:700; letter-spacing:.13em;
+  text-transform:uppercase; color:#fff; background:var(--green-d); padding:7px 13px;
+  text-align:center;
+}
+
+.live-wrap{display:grid; gap:11px; grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.livecard{background:var(--paper); border:1px solid var(--line); border-left:5px solid var(--sun);
+  border-radius:var(--r); padding:13px 15px; box-shadow:var(--sh)}
+.livecard .k{font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--sun-d); font-weight:600}
+.livecard .t{font-family:var(--sans); font-weight:800; font-style:italic; font-size:18px;
+  margin-top:5px; line-height:1.3; letter-spacing:-.01em}
+.livecard .m{font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:5px}
+
+/* ---------- Tabellen ---------- */
+.tw{overflow-x:auto; background:var(--paper); border:1px solid var(--line);
+  border-radius:var(--r); box-shadow:var(--sh)}
+table{border-collapse:collapse; width:100%; font-size:14px}
+th{background:var(--ink); color:#fff; font-family:var(--cond); font-weight:700; font-size:11px;
+  letter-spacing:.09em; text-transform:uppercase; padding:9px 8px; text-align:right; white-space:nowrap}
+th:nth-child(-n+2){text-align:left}
+td{padding:9px 8px; border-top:1px solid var(--line); text-align:right; font-family:var(--mono);
+  font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink-2)}
+td:nth-child(2){text-align:left; font-family:var(--cond); font-size:15.5px; white-space:normal;
+  min-width:120px; font-weight:600; color:var(--ink)}
+td:first-child{text-align:left; color:var(--muted)}
+tbody tr:nth-child(even){background:var(--soft)}
+tbody tr:hover{background:var(--green-pale)}
+td b{color:var(--ink)}
+.badge{display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px;
+  border-radius:99px; font-family:var(--mono); font-size:12px; font-weight:600}
+.badge.b1{background:var(--sun); color:#3A2600}
+.badge.b2{background:#D6D9DA; color:var(--ink)}
+.badge.b3{background:var(--olive); color:#243109}
+tr.p1 td{background:#FEF7E6}
+tr.p1 td:nth-child(2){font-weight:700}
+tr.p2 td{background:#F2F4F4}
+tr.p3 td{background:#F2F7E9}
+
+/* ---------- Formular ---------- */
+.grid{display:grid; gap:11px; grid-template-columns:repeat(auto-fit,minmax(235px,1fr))}
+.fld{background:var(--paper); border:1px solid var(--line); border-radius:var(--r);
+  padding:9px 12px 7px; box-shadow:var(--sh-1)}
+.fld label{display:block; font-size:11.5px; color:var(--muted); margin-bottom:2px}
+.fld input,.fld select{
+  width:100%; border:0; border-bottom:2px solid var(--line); background:transparent;
+  font-family:var(--mono); font-size:16px; color:var(--ink); padding:3px 0; min-height:30px;
+}
+.fld input:focus,.fld select:focus{outline:0; border-bottom-color:var(--green)}
+.fld.name input{font-family:var(--cond); font-size:17.5px; font-weight:600}
+.fld .code{font-family:var(--mono); font-size:10.5px; color:var(--green-dd);
+  letter-spacing:.1em; font-weight:600}
+
+.btn{
+  all:unset; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
+  gap:6px; padding:11px 17px; min-height:44px; border-radius:var(--r-s); background:var(--green-d);
+  color:#fff; font-family:var(--cond); font-weight:700; font-size:15px; box-shadow:var(--sh-1);
+}
+.btn:hover{background:var(--green-dd)}
+.btn:focus-visible{outline:3px solid var(--ink); outline-offset:2px}
+.btn.ghost{background:var(--paper); color:var(--ink); border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--green-pale); color:var(--green-dd)}
+.btn.sm{padding:8px 12px; min-height:38px; font-size:14px}
+.row{display:flex; gap:9px; flex-wrap:wrap; align-items:center}
+
+.info{background:var(--paper); border:1px solid var(--line); border-left:4px solid var(--green);
+  border-radius:var(--r); padding:12px 14px; font-size:13.5px; color:var(--ink-2); box-shadow:var(--sh-1)}
+.info b{color:var(--ink)}
+.info + .info{margin-top:9px}
+.muted{color:var(--muted)}
+small{font-size:12px}
+
+/* ---------- Dialog ---------- */
+.back{position:fixed; inset:0; background:rgba(20,26,21,.55); display:flex; align-items:flex-end;
+  justify-content:center; z-index:60}
+@media(min-width:640px){.back{align-items:center}}
+.sheet{background:var(--paper); width:100%; max-width:470px; border-radius:14px 14px 0 0;
+  padding:17px 17px calc(17px + env(safe-area-inset-bottom)); max-height:92vh; overflow:auto;
+  box-shadow:0 -8px 40px rgba(20,26,21,.3)}
+@media(min-width:640px){.sheet{border-radius:14px; box-shadow:0 20px 60px rgba(20,26,21,.32)}}
+.sheet h3{font-size:19px}
+.sheet .src{font-family:var(--mono); font-size:10.5px; color:var(--muted); letter-spacing:.05em;
+  text-transform:uppercase; margin-bottom:12px}
+.setrow{display:grid; grid-template-columns:32px 1fr 1fr; gap:9px; align-items:center; margin-bottom:9px}
+.setrow .n{font-family:var(--mono); font-size:10.5px; color:var(--muted); letter-spacing:.06em}
+.stp{display:flex; align-items:center; border:1px solid var(--line); border-radius:var(--r-s); overflow:hidden}
+.stp button{all:unset; cursor:pointer; width:42px; min-height:48px; display:flex; align-items:center;
+  justify-content:center; font-size:22px; font-family:var(--mono); color:var(--green-dd);
+  background:var(--green-pale)}
+.stp button:active{background:var(--olive)}
+.stp button:focus-visible{outline:2px solid var(--ink); outline-offset:-2px}
+.stp input{width:100%; min-width:0; border:0; text-align:center; font-family:var(--mono);
+  font-size:21px; font-weight:600; min-height:48px; background:transparent; color:var(--ink)}
+.stp input:focus{outline:0; background:var(--cream)}
+.names{display:grid; grid-template-columns:32px 1fr 1fr; gap:9px; margin-bottom:7px}
+.names div{font-family:var(--cond); font-weight:700; font-size:14px; overflow:hidden;
+  text-overflow:ellipsis; white-space:nowrap}
+.names div:first-child{visibility:hidden}
+
+.pwrow input{width:100%; border:1px solid var(--line); border-radius:var(--r-s);
+  padding:11px 12px; min-height:48px; font-family:var(--mono); font-size:17px; color:var(--ink);
+  background:var(--paper)}
+.pwrow input:focus{outline:0; border-color:var(--green); box-shadow:0 0 0 3px var(--green-pale)}
+.check{display:flex; align-items:center; gap:9px; margin-top:6px; margin-bottom:6px; font-size:14px;
+  color:var(--ink); cursor:pointer; min-height:34px}
+.check .muted{font-size:12.5px}
+.check input:disabled{opacity:.45}
+.check:has(input:disabled){cursor:default; color:var(--muted)}
+.check input{width:20px; height:20px; accent-color:var(--green)}
+.pwmsg{color:#A32100; font-size:13px; margin:9px 0 0; min-height:1px; font-weight:500}
+
+/* ---------- QR ---------- */
+.qrbox{background:var(--paper); border:1px solid var(--line); border-radius:var(--r); padding:17px;
+  display:flex; flex-direction:column; align-items:center; gap:11px; box-shadow:var(--sh)}
+.qrbox svg{width:100%; max-width:310px; height:auto; image-rendering:pixelated;
+  border:6px solid #fff; border-radius:3px}
+.qrbox .cap{font-family:var(--mono); font-size:10.5px; color:var(--muted); text-align:center;
+  word-break:break-all; line-height:1.5}
+
+@media(max-width:520px){
+  .match{grid-template-columns:50px 1fr auto; gap:9px; padding:10px 11px}
+  .match .who{font-size:15.5px}
+  .match .sc{font-size:16px; padding:3px 7px}
+  main{padding:13px 9px 64px}
+  .top h1{font-size:18px}
+  .eyebrow{font-size:12px}
+  .ribbon{padding:11px 11px 9px}
+}
+@media print{
+  .top,nav,.btn,.qrbox,.row,.no-print{display:none!important}
+  body{background:#fff}
+  .card,.tw,.ribbon,.info{border-color:#999; box-shadow:none; break-inside:avoid}
+  th,.roundhead{-webkit-print-color-adjust:exact; print-color-adjust:exact}
+}
+@media(prefers-reduced-motion:no-preference){
+  .back{animation:fade .16s ease both}
+  .sheet{animation:rise .22s cubic-bezier(.2,.8,.25,1) both}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  @keyframes rise{from{transform:translateY(14px); opacity:.4}to{transform:none; opacity:1}}
+}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="topline"><span class="eyebrow" id="clb">STV Uerkheim</span><span class="sub" id="dte"></span></div>
+    <h1 id="ttl">Beachvolleyball-Turnier</h1>
+  </div>
+  <div class="chips"><span class="chip" id="modeChip"></span><span class="chip" id="syncChip"></span></div>
+</header>
+<nav id="nav"></nav>
+<main id="main"></main>
+<script>
+/* ---------------------------------------------------------------
+   Beachvolleyball-Turnier, 13 Teams
+   Eine Datei, keine externen Abhaengigkeiten ausser den Schriften.
+   Reihenfolge: QR-Tabellen, QR-Encoder, SHA-256, Turnierlogik, Oberflaeche.
+   --------------------------------------------------------------- */
+const RSB={L:[[1,26,19],[1,44,34],[1,70,55],[1,100,80],[1,134,108],[2,86,68],[2,98,78],[2,121,97],[2,146,116],[2,86,68,2,87,69],[4,101,81],[2,116,92,2,117,93],[4,133,107],[3,145,115,1,146,116],[5,109,87,1,110,88],[5,122,98,1,123,99],[1,135,107,5,136,108],[5,150,120,1,151,121],[3,141,113,4,142,114],[3,135,107,5,136,108],[4,144,116,4,145,117],[2,139,111,7,140,112],[4,151,121,5,152,122],[6,147,117,4,148,118],[8,132,106,4,133,107],[10,142,114,2,143,115],[8,152,122,4,153,123],[3,147,117,10,148,118],[7,146,116,7,147,117],[5,145,115,10,146,116],[13,145,115,3,146,116],[17,145,115],[17,145,115,1,146,116],[13,145,115,6,146,116],[12,151,121,7,152,122],[6,151,121,14,152,122],[17,152,122,4,153,123],[4,152,122,18,153,123],[20,147,117,4,148,118],[19,148,118,6,149,119]],M:[[1,26,16],[1,44,28],[1,70,44],[2,50,32],[2,67,43],[4,43,27],[4,49,31],[2,60,38,2,61,39],[3,58,36,2,59,37],[4,69,43,1,70,44],[1,80,50,4,81,51],[6,58,36,2,59,37],[8,59,37,1,60,38],[4,64,40,5,65,41],[5,65,41,5,66,42],[7,73,45,3,74,46],[10,74,46,1,75,47],[9,69,43,4,70,44],[3,70,44,11,71,45],[3,67,41,13,68,42],[17,68,42],[17,74,46],[4,75,47,14,76,48],[6,73,45,14,74,46],[8,75,47,13,76,48],[19,74,46,4,75,47],[22,73,45,3,74,46],[3,73,45,23,74,46],[21,73,45,7,74,46],[19,75,47,10,76,48],[2,74,46,29,75,47],[10,74,46,23,75,47],[14,74,46,21,75,47],[14,74,46,23,75,47],[12,75,47,26,76,48],[6,75,47,34,76,48],[29,74,46,14,75,47],[13,74,46,32,75,47],[40,75,47,7,76,48],[18,75,47,31,76,48]]};
+const ALIGN=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]];
+
+/* ---- QR-Encoder, Byte-Modus, EC-Stufen L und M, Versionen 1-40 ---- */
+
+const GEXP = new Uint8Array(512), GLOG = new Uint8Array(256);
+(function () {
+  let x = 1;
+  for (let i = 0; i < 255; i++) { GEXP[i] = x; GLOG[x] = i; x <<= 1; if (x & 0x100) x ^= 0x11d; }
+  for (let i = 255; i < 512; i++) GEXP[i] = GEXP[i - 255];
+})();
+function gmul(a, b) { return (a === 0 || b === 0) ? 0 : GEXP[GLOG[a] + GLOG[b]]; }
+
+function genPoly(n) {
+  let g = [1];
+  for (let i = 0; i < n; i++) {
+    const ng = new Array(g.length + 1).fill(0);
+    for (let j = 0; j < g.length; j++) {
+      ng[j] ^= gmul(g[j], 1);
+      ng[j + 1] ^= gmul(g[j], GEXP[i]);
+    }
+    g = ng;
+  }
+  return g;
+}
+
+function ecBytes(data, ecLen) {
+  const g = genPoly(ecLen);
+  const res = new Array(data.length + ecLen).fill(0);
+  for (let i = 0; i < data.length; i++) res[i] = data[i];
+  for (let i = 0; i < data.length; i++) {
+    const f = res[i];
+    if (f === 0) continue;
+    for (let j = 0; j < g.length; j++) res[i + j] ^= gmul(g[j], f);
+  }
+  return res.slice(data.length);
+}
+
+function utf8Bytes(str) {
+  const out = [];
+  for (const ch of str) {
+    let cp = ch.codePointAt(0);
+    if (cp < 0x80) out.push(cp);
+    else if (cp < 0x800) out.push(0xc0 | (cp >> 6), 0x80 | (cp & 63));
+    else if (cp < 0x10000) out.push(0xe0 | (cp >> 12), 0x80 | ((cp >> 6) & 63), 0x80 | (cp & 63));
+    else out.push(0xf0 | (cp >> 18), 0x80 | ((cp >> 12) & 63), 0x80 | ((cp >> 6) & 63), 0x80 | (cp & 63));
+  }
+  return out;
+}
+
+function blocksFor(version, level) {
+  const row = RSB[level][version - 1], blocks = [];
+  for (let i = 0; i < row.length; i += 3) {
+    for (let k = 0; k < row[i]; k++) blocks.push({ total: row[i + 1], data: row[i + 2] });
+  }
+  return blocks;
+}
+function dataCapacity(version, level) {
+  return blocksFor(version, level).reduce((s, b) => s + b.data, 0);
+}
+
+const MASKS = [
+  (i, j) => (i + j) % 2 === 0,
+  (i, j) => i % 2 === 0,
+  (i, j) => j % 3 === 0,
+  (i, j) => (i + j) % 3 === 0,
+  (i, j) => (Math.floor(i / 2) + Math.floor(j / 3)) % 2 === 0,
+  (i, j) => ((i * j) % 2) + ((i * j) % 3) === 0,
+  (i, j) => (((i * j) % 2) + ((i * j) % 3)) % 2 === 0,
+  (i, j) => (((i * j) % 3) + ((i + j) % 2)) % 2 === 0,
+];
+
+function bchFormat(v) {
+  let d = v << 10;
+  while (bitLen(d) - 11 >= 0) d ^= 0x537 << (bitLen(d) - 11);
+  return ((v << 10) | d) ^ 0x5412;
+}
+function bchVersion(v) {
+  let d = v << 12;
+  while (bitLen(d) - 13 >= 0) d ^= 0x1f25 << (bitLen(d) - 13);
+  return (v << 12) | d;
+}
+function bitLen(n) { let c = 0; while (n !== 0) { c++; n >>>= 1; } return c; }
+
+function buildMatrix(version, level, codewords, mask, test) {
+  const size = version * 4 + 17;
+  const m = [], reserved = [];
+  for (let i = 0; i < size; i++) { m.push(new Array(size).fill(0)); reserved.push(new Array(size).fill(0)); }
+
+  const finder = (r, c) => {
+    for (let dr = -1; dr <= 7; dr++) for (let dc = -1; dc <= 7; dc++) {
+      const rr = r + dr, cc = c + dc;
+      if (rr < 0 || rr >= size || cc < 0 || cc >= size) continue;
+      const on = (dr >= 0 && dr <= 6 && (dc === 0 || dc === 6)) ||
+        (dc >= 0 && dc <= 6 && (dr === 0 || dr === 6)) ||
+        (dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4);
+      m[rr][cc] = on ? 1 : 0; reserved[rr][cc] = 1;
+    }
+  };
+  finder(0, 0); finder(0, size - 7); finder(size - 7, 0);
+
+  for (let i = 8; i < size - 8; i++) {
+    const v = i % 2 === 0 ? 1 : 0;
+    m[6][i] = v; reserved[6][i] = 1;
+    m[i][6] = v; reserved[i][6] = 1;
+  }
+
+  const pos = ALIGN[version - 1];
+  for (const r of pos) for (const c of pos) {
+    if ((r <= 8 && c <= 8) || (r <= 8 && c >= size - 9) || (r >= size - 9 && c <= 8)) continue;
+    for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) {
+      m[r + dr][c + dc] = (Math.max(Math.abs(dr), Math.abs(dc)) !== 1) ? 1 : 0;
+      reserved[r + dr][c + dc] = 1;
+    }
+  }
+
+  for (let i = 0; i < 9; i++) { if (!reserved[8][i]) reserved[8][i] = 1; if (!reserved[i][8]) reserved[i][8] = 1; }
+  for (let i = 0; i < 8; i++) { reserved[8][size - 1 - i] = 1; reserved[size - 1 - i][8] = 1; }
+  m[size - 8][8] = test ? 0 : 1; reserved[size - 8][8] = 1;
+
+  if (version >= 7) {
+    const bits = bchVersion(version);
+    for (let i = 0; i < 18; i++) {
+      const b = test ? 0 : ((bits >> i) & 1), r = Math.floor(i / 3), c = i % 3;
+      m[size - 11 + c][r] = b; reserved[size - 11 + c][r] = 1;
+      m[r][size - 11 + c] = b; reserved[r][size - 11 + c] = 1;
+    }
+  }
+
+  let bitIdx = 0;
+  const totalBits = codewords.length * 8;
+  let up = true;
+  for (let col = size - 1; col > 0; col -= 2) {
+    if (col === 6) col--;
+    for (let n = 0; n < size; n++) {
+      const row = up ? size - 1 - n : n;
+      for (let k = 0; k < 2; k++) {
+        const c = col - k;
+        if (reserved[row][c]) continue;
+        let bit = 0;
+        if (bitIdx < totalBits) bit = (codewords[bitIdx >> 3] >> (7 - (bitIdx & 7))) & 1;
+        bitIdx++;
+        if (MASKS[mask](row, c)) bit ^= 1;
+        m[row][c] = bit;
+      }
+    }
+    up = !up;
+  }
+
+  const ecBits = level === 'L' ? 1 : 0;
+  const fmt = bchFormat((ecBits << 3) | mask);
+  for (let i = 0; i < 15; i++) {
+    const b = test ? 0 : ((fmt >> i) & 1);
+    if (i < 6) m[i][8] = b;
+    else if (i < 8) m[i + 1][8] = b;
+    else if (i === 8) m[8][7] = b;
+    else m[8][14 - i] = b;
+    if (i < 8) m[8][size - 1 - i] = b;
+    else m[size - 15 + i][8] = b;
+  }
+  m[size - 8][8] = test ? 0 : 1;
+  return m;
+}
+
+function penalty(m) {
+  const n = m.length; let p = 0;
+  for (let i = 0; i < n; i++) {
+    for (const dir of [0, 1]) {
+      let run = 1, prev = dir ? m[0][i] : m[i][0];
+      for (let j = 1; j < n; j++) {
+        const v = dir ? m[j][i] : m[i][j];
+        if (v === prev) run++;
+        else { if (run >= 5) p += 3 + (run - 5); run = 1; prev = v; }
+      }
+      if (run >= 5) p += 3 + (run - 5);
+    }
+  }
+  for (let i = 0; i < n - 1; i++) for (let j = 0; j < n - 1; j++) {
+    const s = m[i][j] + m[i][j + 1] + m[i + 1][j] + m[i + 1][j + 1];
+    if (s === 0 || s === 4) p += 3;
+  }
+  const pat1 = [1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0], pat2 = [0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1];
+  for (let i = 0; i < n; i++) for (let j = 0; j <= n - 11; j++) {
+    let a = true, b = true, c = true, d = true;
+    for (let k = 0; k < 11; k++) {
+      if (m[i][j + k] !== pat1[k]) a = false;
+      if (m[i][j + k] !== pat2[k]) b = false;
+      if (m[j + k][i] !== pat1[k]) c = false;
+      if (m[j + k][i] !== pat2[k]) d = false;
+    }
+    if (a) p += 40; if (b) p += 40; if (c) p += 40; if (d) p += 40;
+  }
+  let dark = 0;
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) dark += m[i][j];
+  p += Math.floor(Math.abs(dark * 100 / (n * n) - 50) / 5) * 10;
+  return p;
+}
+
+function qrMatrix(text, level) {
+  level = level || 'M';
+  const bytes = utf8Bytes(text);
+  let version = 0;
+  for (let v = 1; v <= 40; v++) {
+    const ccBits = v <= 9 ? 8 : 16;
+    if (4 + ccBits + bytes.length * 8 <= dataCapacity(v, level) * 8) { version = v; break; }
+  }
+  if (!version) throw new Error('Inhalt zu lang für einen QR-Code');
+
+  const ccBits = version <= 9 ? 8 : 16;
+  const bits = [];
+  const push = (val, len) => { for (let i = len - 1; i >= 0; i--) bits.push((val >> i) & 1); };
+  push(4, 4); push(bytes.length, ccBits);
+  for (const b of bytes) push(b, 8);
+
+  const cap = dataCapacity(version, level) * 8;
+  for (let i = 0; i < 4 && bits.length < cap; i++) bits.push(0);
+  while (bits.length % 8 !== 0) bits.push(0);
+  const data = [];
+  for (let i = 0; i < bits.length; i += 8) {
+    let b = 0; for (let k = 0; k < 8; k++) b = (b << 1) | bits[i + k];
+    data.push(b);
+  }
+  const padBytes = [0xec, 0x11];
+  let pi = 0;
+  while (data.length < cap / 8) data.push(padBytes[pi++ % 2]);
+
+  const blocks = blocksFor(version, level);
+  const dataBlocks = [], ecBlocks = [];
+  let off = 0;
+  for (const b of blocks) {
+    const d = data.slice(off, off + b.data); off += b.data;
+    dataBlocks.push(d);
+    ecBlocks.push(ecBytes(d, b.total - b.data));
+  }
+  const out = [];
+  const maxData = Math.max(...dataBlocks.map(b => b.length));
+  for (let i = 0; i < maxData; i++) for (const b of dataBlocks) if (i < b.length) out.push(b[i]);
+  const maxEc = Math.max(...ecBlocks.map(b => b.length));
+  for (let i = 0; i < maxEc; i++) for (const b of ecBlocks) if (i < b.length) out.push(b[i]);
+
+  let bestMask = 0, bestP = Infinity;
+  for (let mask = 0; mask < 8; mask++) {
+    const p = penalty(buildMatrix(version, level, out, mask, true));
+    if (p < bestP) { bestP = p; bestMask = mask; }
+  }
+  return buildMatrix(version, level, out, bestMask, false);
+}
+
+/* ---- SHA-256, reines JavaScript (kein secure context noetig) ---- */
+const K256 = new Uint32Array([
+  0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+  0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+  0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+  0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+  0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+  0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+  0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+  0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2]);
+
+function sha256(msg) {
+  const len = msg.length;
+  const bitLen = len * 8;
+  const withPad = Math.ceil((len + 9) / 64) * 64;
+  const m = new Uint8Array(withPad);
+  m.set(msg, 0);
+  m[len] = 0x80;
+  const dv = new DataView(m.buffer);
+  dv.setUint32(withPad - 8, Math.floor(bitLen / 0x100000000));
+  dv.setUint32(withPad - 4, bitLen >>> 0);
+
+  let h0 = 0x6a09e667, h1 = 0xbb67ae85, h2 = 0x3c6ef372, h3 = 0xa54ff53a,
+      h4 = 0x510e527f, h5 = 0x9b05688c, h6 = 0x1f83d9ab, h7 = 0x5be0cd19;
+  const w = new Uint32Array(64);
+
+  for (let off = 0; off < withPad; off += 64) {
+    for (let i = 0; i < 16; i++) w[i] = dv.getUint32(off + i * 4);
+    for (let i = 16; i < 64; i++) {
+      const a = w[i - 15], b = w[i - 2];
+      const s0 = ((a >>> 7) | (a << 25)) ^ ((a >>> 18) | (a << 14)) ^ (a >>> 3);
+      const s1 = ((b >>> 17) | (b << 15)) ^ ((b >>> 19) | (b << 13)) ^ (b >>> 10);
+      w[i] = (w[i - 16] + s0 + w[i - 7] + s1) >>> 0;
+    }
+    let a = h0, b = h1, c = h2, d = h3, e = h4, f = h5, g = h6, h = h7;
+    for (let i = 0; i < 64; i++) {
+      const S1 = ((e >>> 6) | (e << 26)) ^ ((e >>> 11) | (e << 21)) ^ ((e >>> 25) | (e << 7));
+      const ch = (e & f) ^ (~e & g);
+      const t1 = (h + S1 + ch + K256[i] + w[i]) >>> 0;
+      const S0 = ((a >>> 2) | (a << 30)) ^ ((a >>> 13) | (a << 19)) ^ ((a >>> 22) | (a << 10));
+      const mj = (a & b) ^ (a & c) ^ (b & c);
+      const t2 = (S0 + mj) >>> 0;
+      h = g; g = f; f = e; e = (d + t1) >>> 0;
+      d = c; c = b; b = a; a = (t1 + t2) >>> 0;
+    }
+    h0 = (h0 + a) >>> 0; h1 = (h1 + b) >>> 0; h2 = (h2 + c) >>> 0; h3 = (h3 + d) >>> 0;
+    h4 = (h4 + e) >>> 0; h5 = (h5 + f) >>> 0; h6 = (h6 + g) >>> 0; h7 = (h7 + h) >>> 0;
+  }
+  const out = new Uint8Array(32), odv = new DataView(out.buffer);
+  [h0, h1, h2, h3, h4, h5, h6, h7].forEach((v, i) => odv.setUint32(i * 4, v));
+  return out;
+}
+
+/* Passwort langsam ableiten: viele Runden, damit Durchprobieren teuer wird */
+const PW_ITER = 120000;
+function derivePw(pw, salt) {
+  const enc = new TextEncoder();
+  let h = sha256(enc.encode(salt + '\u0000' + pw));
+  const buf = new Uint8Array(36);
+  for (let i = 1; i < PW_ITER; i++) {
+    buf.set(h, 0);
+    buf[32] = i & 255; buf[33] = (i >>> 8) & 255; buf[34] = (i >>> 16) & 255; buf[35] = (i >>> 24) & 255;
+    h = sha256(buf);
+  }
+  let s = '';
+  for (let i = 0; i < 16; i++) s += String.fromCharCode(h[i]);
+  return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+function newSalt() {
+  const a = new Uint8Array(6);
+  if (typeof crypto !== 'undefined' && crypto.getRandomValues) crypto.getRandomValues(a);
+  else for (let i = 0; i < 6; i++) a[i] = Math.floor(Math.random() * 256);
+  return Array.from(a).map(x => x.toString(16).padStart(2, '0')).join('');
+}
+
+/* ================= Turnierlogik ================= */
+
+const MAXG = 6, MINSZ = 2, MAXSZ = 12;
+
+const DEFAULTS = {
+  club: 'STV Uerkheim',
+  title: 'Beachvolleyball-Turnier',
+  date: '',
+  base: '',
+  pwSalt: '', pwHash: '',
+  start: 9 * 60,
+  dGroup: 20, pGroup: 5,
+  lunch: 45, lunchAfter: 5,      // Mittagspause nach diesem Zeitblock, 0 = keine
+  dQuarter: 30, dSemi: 30, dFinal: 40, pFinal: 10,
+  qf: false, hf: true, kf: true,   // Viertelfinal / Halbfinal / kleiner Final
+  courts: 3,
+  mode: 'block',                 // 'block' = Gruppe für Gruppe, 'mixed' = durchmischt
+  win: 2, draw: 1, loss: 0,
+  sizes: [6, 7],
+  names: [
+    ['Team A1', 'Team A2', 'Team A3', 'Team A4', 'Team A5', 'Team A6'],
+    ['Team B1', 'Team B2', 'Team B3', 'Team B4', 'Team B5', 'Team B6', 'Team B7'],
+  ],
+  res: [Array(15).fill(null), Array(21).fill(null)],
+  // 0-3 Viertelfinals, 4-5 Halbfinals, 6 kleiner Final, 7 Final
+  rF: Array.from({ length: 8 }, () => [null, null, null]),
+};
+
+const GL = g => String.fromCharCode(65 + g);          // 0 -> 'A'
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+const nMatches = n => n * (n - 1) / 2;
+
+function roundRobin(n) {
+  const t = [];
+  for (let i = 0; i < n; i++) t.push(i);
+  if (n % 2) t.push(-1);
+  const m = t.length, rounds = [];
+  let arr = t.slice();
+  for (let r = 0; r < m - 1; r++) {
+    const pairs = [];
+    for (let i = 0; i < m / 2; i++) {
+      const a = arr[i], b = arr[m - 1 - i];
+      if (a >= 0 && b >= 0) pairs.push([a, b]);
+    }
+    if (pairs.length) rounds.push(pairs);
+    arr = [arr[0], arr[m - 1]].concat(arr.slice(1, m - 1));
+  }
+  return rounds;
+}
+
+const _rrCache = {};
+function rrFor(n) {
+  if (!_rrCache[n]) _rrCache[n] = roundRobin(n);
+  return _rrCache[n];
+}
+/* Flache Spielliste einer Gruppengrösse: {round, a, b} */
+const _fxCache = {};
+function fixtures(n) {
+  if (!_fxCache[n]) {
+    const out = [];
+    rrFor(n).forEach((rd, ri) => rd.forEach(p => out.push({ round: ri, a: p[0], b: p[1] })));
+    _fxCache[n] = out;
+  }
+  return _fxCache[n];
+}
+
+function hhmm(min) {
+  min = Math.round(min);
+  const h = Math.floor(min / 60) % 24, m = ((min % 60) + 60) % 60;
+  return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+}
+function parseHHMM(s) {
+  const m = /^(\d{1,2}):(\d{2})$/.exec((s || '').trim());
+  if (!m) return null;
+  const h = +m[1], mi = +m[2];
+  if (h > 23 || mi > 59) return null;
+  return h * 60 + mi;
+}
+
+/* ---- Zeitblöcke bilden: je Block laufen bis zu «courts» Partien parallel ---- */
+function buildSlots(st) {
+  const courts = clamp(st.courts | 0, 1, 6);
+  const G = st.sizes.length;
+  const rr = st.sizes.map(n => rrFor(n));
+  // laufender Index jeder Partie innerhalb ihrer Gruppe, passend zu fixtures()
+  const flat = rr.map(rs => { let k = 0; return rs.map(r => r.map(() => k++)); });
+  const slots = [];
+
+  if (st.mode === 'mixed') {
+    const cur = new Array(G).fill(0), pos = new Array(G).fill(0);
+    let turn = 0, guard = 0;
+    const left = g => (cur[g] < rr[g].length) ? rr[g][cur[g]].length - pos[g] : 0;
+    while (rr.some((rs, g) => cur[g] < rs.length) && guard++ < 5000) {
+      const slot = [];
+      let inner = 0;
+      while (slot.length < courts && rr.some((_, g) => left(g) > 0) && inner++ < 200) {
+        for (let k = 0; k < G && slot.length < courts; k++) {
+          const g = (turn + k) % G;
+          if (left(g) <= 0) continue;
+          slot.push({ g, m: flat[g][cur[g]][pos[g]], round: cur[g] });
+          pos[g]++;
+        }
+        turn = (turn + 1) % G;
+      }
+      for (let g = 0; g < G; g++) {
+        if (cur[g] < rr[g].length && pos[g] >= rr[g][cur[g]].length) { cur[g]++; pos[g] = 0; }
+      }
+      if (!slot.length) break;
+      slots.push(slot);
+    }
+  } else {
+    for (let g = 0; g < G; g++) {
+      rr[g].forEach((round, ri) => {
+        for (let i = 0; i < round.length; i += courts) {
+          const slot = [];
+          for (let k = 0; k < courts && i + k < round.length; k++) {
+            slot.push({ g, m: flat[g][ri][i + k], round: ri });
+          }
+          slots.push(slot);
+        }
+      });
+    }
+  }
+  return slots;
+}
+
+/* Welche Stufen werden tatsächlich gespielt? Abhängigkeiten und Teamzahl entscheiden mit. */
+function bracketPlan(st) {
+  const total = totalTeams(st);
+  let hf = !!st.hf;
+  let qf = !!st.qf, kf = !!st.kf;
+  if (!hf) { qf = false; kf = false; }        // ohne Halbfinal gibt es weder Viertelfinal noch Spiel um Platz 3
+  if (qf && total < 8) qf = false;
+  if (hf && total < 4) { hf = false; kf = false; }
+  const fin = total >= 2;
+  const need = qf ? 8 : (hf ? 4 : (fin ? 2 : 0));
+  const games = [];
+  if (qf) for (let i = 0; i < 4; i++) games.push({ id: i, stage: 'qf', nSets: 2, label: 'Viertelfinal ' + (i + 1), short: 'VF ' + (i + 1) });
+  if (hf) for (let i = 0; i < 2; i++) games.push({ id: 4 + i, stage: 'hf', nSets: 2, label: 'Halbfinal ' + (i + 1), short: 'HF ' + (i + 1) });
+  if (kf) games.push({ id: 6, stage: 'kf', nSets: 3, label: 'Kleiner Final · Platz 3/4', short: 'Platz 3/4' });
+  if (fin) games.push({ id: 7, stage: 'fin', nSets: 3, label: 'Final · Platz 1/2', short: 'Final' });
+  const off = [];
+  if (st.qf && !qf) off.push(st.hf ? 'Viertelfinal (weniger als 8 Teams)' : 'Viertelfinal (ohne Halbfinal nicht möglich)');
+  if (st.hf && !hf) off.push('Halbfinal (weniger als 4 Teams)');
+  if (st.kf && !kf) off.push('Kleiner Final (ohne Halbfinal nicht möglich)');
+  return { qf, hf, kf, fin, need, games, off };
+}
+
+function schedule(st) {
+  const slots = buildSlots(st);
+  const matches = [];
+  let t = st.start, groupEnd = st.start, lunchFrom = null, lunchTo = null;
+  const lunchAt = (st.lunch > 0) ? clamp(st.lunchAfter | 0, 0, Math.max(0, slots.length - 1)) : 0;
+
+  slots.forEach((slot, si) => {
+    slot.forEach((m, k) => matches.push({
+      g: m.g, idx: m.m, round: m.round, slot: si, court: k + 1,
+      from: t, to: t + st.dGroup,
+      nameA: (st.names[m.g] || [])[fixtures(st.sizes[m.g])[m.m].a],
+      nameB: (st.names[m.g] || [])[fixtures(st.sizes[m.g])[m.m].b],
+      res: (st.res[m.g] || [])[m.m] || null,
+    }));
+    const end = t + st.dGroup;
+    groupEnd = end;
+    if (si === slots.length - 1) return;
+    if (si + 1 === lunchAt) { lunchFrom = end; lunchTo = end + st.lunch; t = lunchTo; }
+    else t = end + st.pGroup;
+  });
+  if (!slots.length) groupEnd = st.start;
+
+  const courts = clamp(st.courts | 0, 1, 6);
+  const plan = bracketPlan(st);
+  const dur = { qf: st.dQuarter, hf: st.dSemi, kf: st.dFinal, fin: st.dFinal };
+  const F = [];
+  let ft = groupEnd;
+  ['qf', 'hf', 'kf', 'fin'].forEach(stg => {
+    const gs = plan.games.filter(g => g.stage === stg);
+    if (!gs.length) return;
+    const d = dur[stg];
+    // Kleiner Final und Final laufen bewusst allein, damit alle zuschauen können
+    const perSlot = (stg === 'kf' || stg === 'fin') ? 1 : courts;
+    for (let i = 0; i < gs.length; i += perSlot) {
+      ft += st.pFinal;
+      for (let k = 0; k < perSlot && i + k < gs.length; k++) {
+        F.push(Object.assign({}, gs[i + k], { court: k + 1, from: ft, to: ft + d }));
+      }
+      ft += d;
+    }
+  });
+  const end = F.length ? Math.max(...F.map(g => g.to)) : groupEnd;
+
+  return {
+    slots, matches, groupStart: st.start, groupEnd,
+    lunchFrom, lunchTo, lunchSlot: lunchAt, F, plan, end,
+    byGroup: st.sizes.map((_, g) => matches.filter(m => m.g === g)),
+  };
+}
+
+/* ---- Tabelle einer Gruppe ---- */
+function standings(st, g) {
+  const names = st.names[g] || [], res = st.res[g] || [], fx = fixtures(st.sizes[g]);
+  const rows = names.map((name, i) => ({ i, g, name, sp: 0, w: 0, d: 0, l: 0, pts: 0, pf: 0, pa: 0, diff: 0 }));
+  fx.forEach((f, idx) => {
+    const r = res[idx];
+    if (!r || r[0] === null || r[1] === null) return;
+    const ra = rows[f.a], rb = rows[f.b];
+    if (!ra || !rb) return;
+    const [x, y] = r;
+    ra.sp++; rb.sp++; ra.pf += x; ra.pa += y; rb.pf += y; rb.pa += x;
+    if (x > y) { ra.w++; rb.l++; } else if (y > x) { rb.w++; ra.l++; } else { ra.d++; rb.d++; }
+  });
+  rows.forEach(r => {
+    r.pts = r.w * st.win + r.d * st.draw + r.l * st.loss;
+    r.diff = r.pf - r.pa;
+    r.ppg = r.sp ? r.pts / r.sp : 0;
+    r.dpg = r.sp ? r.diff / r.sp : 0;
+  });
+  const sorted = rows.slice().sort((p, q) => q.pts - p.pts || q.diff - p.diff || q.pf - p.pf || p.i - q.i);
+  sorted.forEach((r, k) => { r.rank = k + 1; });
+  return sorted;
+}
+
+/* ---- Gesamtreihenfolge: erst Gruppenrang, dann Punkte pro Spiel ---- */
+function overallOrder(st) {
+  const tabs = st.sizes.map((_, g) => standings(st, g));
+  const out = [];
+  const maxRank = Math.max(0, ...st.sizes);
+  for (let r = 1; r <= maxRank; r++) {
+    const at = [];
+    tabs.forEach((t, g) => { const row = t.find(x => x.rank === r); if (row) at.push(row); });
+    at.sort((a, b) => b.ppg - a.ppg || b.dpg - a.dpg || a.g - b.g);
+    out.push(...at);
+  }
+  return out;
+}
+
+function evalMatch(sets, nSets, nameA, nameB) {
+  let sa = 0, sb = 0, ta = 0, tb = 0, any = false;
+  for (let i = 0; i < nSets; i++) {
+    const s = sets[i];
+    if (!s || s[0] === null || s[1] === null) continue;
+    any = true; ta += s[0]; tb += s[1];
+    if (s[0] > s[1]) sa++; else if (s[1] > s[0]) sb++;
+  }
+  let winner = null, loser = null, tie = false;
+  if (any) {
+    if (sa > sb) { winner = nameA; loser = nameB; }
+    else if (sb > sa) { winner = nameB; loser = nameA; }
+    else if (ta > tb) { winner = nameA; loser = nameB; }
+    else if (tb > ta) { winner = nameB; loser = nameA; }
+    else tie = true;
+  }
+  return { sa, sb, ta, tb, winner, loser, tie, played: any };
+}
+
+/* ---- Finalrunde: die vier besten Teams über alle Gruppen, 1-4 und 2-3 ---- */
+/* Setzung: Standardpaarungen, aber so gedreht, dass möglichst keine zwei
+   Teams derselben Gruppe schon vor dem Final aufeinandertreffen. */
+function perms(a) {
+  if (a.length <= 1) return [a.slice()];
+  const out = [];
+  a.forEach((v, i) => perms(a.slice(0, i).concat(a.slice(i + 1))).forEach(r => out.push([v].concat(r))));
+  return out;
+}
+function seedPairs(seeds, plan) {
+  if (!plan.hf) return seeds.length >= 2 ? [[seeds[0], seeds[1]]] : [];
+  const top = plan.qf ? [0, 3, 1, 2] : [0, 1];
+  const bot = plan.qf ? [7, 4, 6, 5] : [3, 2];
+  let best = bot, bestC = Infinity;
+  perms(bot).forEach(p => {
+    let c = 0;
+    for (let i = 0; i < top.length; i++) {
+      const a = seeds[top[i]], b = seeds[p[i]];
+      if (a && b && a.g === b.g) c++;
+    }
+    if (c < bestC) { bestC = c; best = p; }
+  });
+  return top.map((t, i) => [seeds[t], seeds[best[i]]]);
+}
+
+/* Endrunde: Teilnehmer, Resultate, Sieger */
+function knockout(st, sched) {
+  const plan = sched.plan;
+  const order = overallOrder(st);
+  const seeds = order.slice(0, plan.need);
+  const pairs = seedPairs(seeds, plan);
+  const games = sched.F.map(f => Object.assign({}, f));
+  const byId = {};
+  games.forEach(g => { byId[g.id] = g; });
+  const lbl = s => s ? `${s.rank}. Gruppe ${GL(s.g)}` : '—';
+
+  const setUp = (g, a, b, sa, sb) => {
+    g.nameA = a; g.srcA = sa; g.nameB = b; g.srcB = sb;
+    g.sets = st.rF[g.id] || [null, null, null];
+    g.ev = evalMatch(g.sets, g.nSets, g.nameA, g.nameB);
+  };
+
+  if (plan.qf) {
+    for (let i = 0; i < 4; i++) {
+      const p = pairs[i] || [];
+      setUp(byId[i], p[0] ? p[0].name : 'Gesetzt', p[1] ? p[1].name : 'Gesetzt', lbl(p[0]), lbl(p[1]));
+    }
+    setUp(byId[4], byId[0].ev.winner || 'Sieger VF 1', byId[1].ev.winner || 'Sieger VF 2',
+      'Sieger VF 1', 'Sieger VF 2');
+    setUp(byId[5], byId[2].ev.winner || 'Sieger VF 3', byId[3].ev.winner || 'Sieger VF 4',
+      'Sieger VF 3', 'Sieger VF 4');
+  } else if (plan.hf) {
+    [0, 1].forEach(i => {
+      const p = pairs[i] || [];
+      setUp(byId[4 + i], p[0] ? p[0].name : 'Gesetzt', p[1] ? p[1].name : 'Gesetzt', lbl(p[0]), lbl(p[1]));
+    });
+  }
+  if (plan.kf) {
+    setUp(byId[6], byId[4].ev.loser || 'Verlierer HF 1', byId[5].ev.loser || 'Verlierer HF 2',
+      'Verlierer HF 1', 'Verlierer HF 2');
+  }
+  if (plan.fin) {
+    if (plan.hf) {
+      setUp(byId[7], byId[4].ev.winner || 'Sieger HF 1', byId[5].ev.winner || 'Sieger HF 2',
+        'Sieger HF 1', 'Sieger HF 2');
+    } else {
+      const p = pairs[0] || [];
+      setUp(byId[7], p[0] ? p[0].name : 'Gesetzt', p[1] ? p[1].name : 'Gesetzt', lbl(p[0]), lbl(p[1]));
+    }
+  }
+  const tabs = st.sizes.map((_, g) => standings(st, g));
+  return { games, byId, seeds, order, tabs, plan, enough: seeds.length >= 2 };
+}
+const finalRound = knockout;   // bisheriger Name
+
+function finalRanking(st, sched) {
+  const ko = knockout(st, sched);
+  const { plan, byId, seeds, order } = ko;
+  const list = [];
+  const add = (place, name, why) => list.push({ place, name: name || null, why });
+  const seedPos = n => { const i = order.findIndex(r => r.name === n); return i < 0 ? 1e6 : i; };
+  const bySeed = arr => arr.slice().sort((a, b) => seedPos(a) - seedPos(b));
+
+  let next = 1;
+  if (plan.fin) {
+    add(next++, byId[7].ev.winner, 'Sieger Final');
+    add(next++, byId[7].ev.loser, 'Verlierer Final');
+  }
+  if (plan.kf) {
+    add(next++, byId[6].ev.winner, 'Sieger kleiner Final');
+    add(next++, byId[6].ev.loser, 'Verlierer kleiner Final');
+  } else if (plan.hf) {
+    bySeed([byId[4].ev.loser, byId[5].ev.loser].filter(Boolean))
+      .forEach(n => add(next++, n, 'Halbfinal verloren · nach Setzung'));
+    while (next <= 4) add(next++, null, 'Halbfinal verloren · nach Setzung');
+  }
+  if (plan.qf) {
+    bySeed([0, 1, 2, 3].map(i => byId[i].ev.loser).filter(Boolean))
+      .forEach(n => add(next++, n, 'Viertelfinal verloren · nach Setzung'));
+    while (next <= 8) add(next++, null, 'Viertelfinal verloren · nach Setzung');
+  }
+  const inKO = new Set(seeds.map(s => s.g + '#' + s.i));
+  order.filter(r => !inKO.has(r.g + '#' + r.i))
+    .forEach(r => add(next++, r.name, `${r.rank}. Gruppe ${GL(r.g)} · ${r.ppg.toFixed(2)} Pkt/Spiel`));
+
+  const info = n => {
+    if (!n) return null;
+    for (let gi = 0; gi < ko.tabs.length; gi++) {
+      const row = ko.tabs[gi].find(x => x.name === n);
+      if (row) return { grp: GL(gi), gRank: row.rank, pts: row.pts, diff: row.diff };
+    }
+    return null;
+  };
+  list.forEach(e => {
+    const i = info(e.name);
+    // Platzhalter wie «Sieger VF 3» sind keine Teams: solange eine Vorrunde offen
+    // ist, bleibt der Platz offen statt einen Namen vorzutäuschen.
+    if (!i) { e.name = null; e.unresolved = true; }
+    else Object.assign(e, i);
+  });
+  return { list, games: ko.games, byId, tabs: ko.tabs, seeds, plan, enough: ko.enough };
+}
+
+/* ---- Struktur an geänderte Gruppen-/Teamzahlen anpassen ---- */
+function normalize(st) {
+  let G = clamp((st.sizes || []).length, 1, MAXG);
+  st.sizes = (st.sizes || []).slice(0, G).map(n => clamp(n | 0, MINSZ, MAXSZ));
+  while (st.sizes.length < G) st.sizes.push(4);
+  st.names = st.names || [];
+  st.res = st.res || [];
+  st.names.length = G; st.res.length = G;
+  for (let g = 0; g < G; g++) {
+    const n = st.sizes[g];
+    const old = st.names[g] || [];
+    const arr = [];
+    for (let i = 0; i < n; i++) arr.push(old[i] || `Team ${GL(g)}${i + 1}`);
+    st.names[g] = arr;
+    const need = nMatches(n), oldr = st.res[g] || [];
+    const rs = [];
+    for (let i = 0; i < need; i++) rs.push(oldr[i] || null);
+    st.res[g] = rs;
+  }
+  st.mode = st.mode === 'mixed' ? 'mixed' : 'block';
+  st.hf = !!st.hf;
+  st.qf = !!st.qf && st.hf;
+  st.kf = !!st.kf && st.hf;
+  st.rF = (st.rF || []).slice(0, 8);
+  while (st.rF.length < 8) st.rF.push([null, null, null]);
+  st.rF = st.rF.map(x => { const y = (x || []).slice(0, 3); while (y.length < 3) y.push(null); return y; });
+  st.courts = clamp(st.courts | 0, 1, 6);
+  st.lunchAfter = Math.max(0, st.lunchAfter | 0);
+  return st;
+}
+
+const totalTeams = st => st.sizes.reduce((a, n) => a + n, 0);
+const totalGroupMatches = st => st.sizes.reduce((a, n) => a + nMatches(n), 0);
+
+
+/* ================= Zustand & Speicher ================= */
+const KEY = 'bvt13:state';
+let st = JSON.parse(JSON.stringify(DEFAULTS));
+let RO = false;          // Nur-Lesen
+let SNAP = false;        // Snapshot aus dem Link, keine Synchronisation
+let view = 'jetzt';
+let openSheet = null;
+
+const UNLOCK = 'bvt13:unlock';
+let memUnlock = '';
+function isUnlocked() {
+  if (!st.pwHash) return true;
+  try { if (sessionStorage.getItem(UNLOCK) === st.pwHash) return true; } catch (e) { /* egal */ }
+  try { if (localStorage.getItem(UNLOCK) === st.pwHash) return true; } catch (e) { /* egal */ }
+  return memUnlock === st.pwHash;
+}
+function setUnlocked(on, remember) {
+  memUnlock = on ? st.pwHash : '';
+  try { sessionStorage.removeItem(UNLOCK); } catch (e) { /* egal */ }
+  try { localStorage.removeItem(UNLOCK); } catch (e) { /* egal */ }
+  if (!on) return;
+  try { (remember ? localStorage : sessionStorage).setItem(UNLOCK, st.pwHash); } catch (e) { /* egal */ }
+}
+
+const Store = {
+  mode: 'memory', mem: null,
+  detect() {
+    try {
+      if (window.storage && typeof window.storage.get === 'function') { this.mode = 'shared'; return; }
+    } catch (e) { /* ignorieren */ }
+    try {
+      localStorage.setItem('__probe', '1'); localStorage.removeItem('__probe');
+      this.mode = 'local';
+    } catch (e) { this.mode = 'memory'; }
+  },
+  async get() {
+    if (this.mode === 'shared') {
+      try { const r = await window.storage.get(KEY, true); return r && r.value ? JSON.parse(r.value) : null; }
+      catch (e) { return null; }
+    }
+    if (this.mode === 'local') {
+      try { const v = localStorage.getItem(KEY); return v ? JSON.parse(v) : null; } catch (e) { return null; }
+    }
+    return this.mem;
+  },
+  async set(o) {
+    const s = JSON.stringify(o);
+    if (this.mode === 'shared') { try { await window.storage.set(KEY, s, true); return true; } catch (e) { return false; } }
+    if (this.mode === 'local') { try { localStorage.setItem(KEY, s); return true; } catch (e) { return false; } }
+    this.mem = o; return true;
+  }
+};
+
+function merge(raw) {
+  const s = JSON.parse(JSON.stringify(DEFAULTS));
+  if (!raw || typeof raw !== 'object') return normalize(s);
+  // Altbestand mit fixen zwei Gruppen uebernehmen
+  if (raw.teamsA || raw.teamsB) {
+    raw = Object.assign({}, raw, {
+      sizes: [(raw.teamsA || []).length || 6, (raw.teamsB || []).length || 7],
+      names: [raw.teamsA || [], raw.teamsB || []],
+      res: [raw.rA || [], raw.rB || []],
+      mode: 'block', lunchAfter: raw.lunchAfter === undefined ? 5 : raw.lunchAfter,
+    });
+  }
+  for (const k of Object.keys(DEFAULTS)) if (raw[k] !== undefined) s[k] = raw[k];
+  s.ts = raw.ts || 0;
+  return normalize(s);   // normalize() bringt rF auf die volle Länge von acht Spielen
+}
+
+let saveTimer = null;
+function save(now) {
+  st.ts = Date.now();
+  if (SNAP) { render(); return; }
+  clearTimeout(saveTimer);
+  const go = () => Store.set(st).then(ok => { if (!ok) flash('Konnte nicht speichern'); });
+  if (now) go(); else saveTimer = setTimeout(go, 250);
+  render();
+}
+
+/* ================= Snapshot im Link ================= */
+function b64e(str) {
+  const b = new TextEncoder().encode(str);
+  let s = ''; for (let i = 0; i < b.length; i++) s += String.fromCharCode(b[i]);
+  return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+function b64d(str) {
+  const s = atob(str.replace(/-/g, '+').replace(/_/g, '/'));
+  const b = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) b[i] = s.charCodeAt(i);
+  return new TextDecoder().decode(b);
+}
+const p2 = v => (v === null || v === undefined || v === '') ? '--' : String(v).padStart(2, '0').slice(-2);
+const u2 = s => { if (s === '--' || s.trim() === '') return null; const v = parseInt(s, 10); return Number.isFinite(v) ? v : null; };
+
+function encodeState(s) {
+  const L = [
+    '4', s.title, s.date,
+    [s.start, s.dGroup, s.pGroup, s.lunch, s.lunchAfter, s.dQuarter, s.dSemi, s.dFinal, s.pFinal,
+     s.courts, s.win, s.draw, s.loss, s.mode === 'mixed' ? 1 : 0,
+     s.qf ? 1 : 0, s.hf ? 1 : 0, s.kf ? 1 : 0].join(';'),
+    s.sizes.join(','),
+    s.names.map(a => a.join('|')).join('\u0001'),
+    s.res.map(a => a.map(r => r ? p2(r[0]) + p2(r[1]) : '----').join('')).join(','),
+    s.rF.map(m => m.map(x => x ? p2(x[0]) + p2(x[1]) : '----').join('')).join(','),
+    String(s.ts || 0), s.club, s.pwSalt || '', s.pwHash || '',
+  ];
+  return b64e(L.join('\n'));
+}
+function pull(str, cnt) {
+  const out = [];
+  for (let i = 0; i < cnt; i++) {
+    const c = str.substr(i * 4, 4);
+    const a = u2(c.substr(0, 2)), b = u2(c.substr(2, 2));
+    out.push((c === '----' || a === null || b === null) ? null : [a, b]);
+  }
+  return out;
+}
+/* Ältere Snapshots hatten vier Endrundenspiele (HF1, HF2, kl. Final, Final).
+   Sie liegen jetzt auf den Positionen 4 bis 7. */
+function liftKO(old) {
+  const out = Array.from({ length: 8 }, () => [null, null, null]);
+  (old || []).slice(0, 4).forEach((m, i) => { out[4 + i] = m; });
+  return out;
+}
+function decodeState(code) {
+  const L = b64d(code).split('\n');
+  if (!['1', '2', '3', '4'].includes(L[0])) throw new Error('Unbekanntes Snapshot-Format');
+  const n = L[3].split(';').map(Number);
+  if (L[0] === '4') {
+    const sizes = L[4].split(',').map(Number);
+    return merge({
+      title: L[1], date: L[2],
+      start: n[0], dGroup: n[1], pGroup: n[2], lunch: n[3], lunchAfter: n[4], dQuarter: n[5],
+      dSemi: n[6], dFinal: n[7], pFinal: n[8], courts: n[9], win: n[10], draw: n[11], loss: n[12],
+      mode: n[13] ? 'mixed' : 'block', qf: !!n[14], hf: !!n[15], kf: !!n[16],
+      sizes, names: L[5].split('\u0001').map(x => x.split('|')),
+      res: sizes.map((sz, g) => pull((L[6].split(','))[g] || '', sz * (sz - 1) / 2)),
+      rF: L[7].split(',').map(m => pull(m, 3)),
+      ts: Number(L[8] || 0), club: L[9] === undefined ? DEFAULTS.club : L[9],
+      pwSalt: L[10] || '', pwHash: L[11] || '',
+    });
+  }
+  if (L[0] === '3') {
+    const sizes = L[4].split(',').map(Number);
+    const names = L[5].split('\u0001').map(x => x.split('|'));
+    const resParts = L[6].split(',');
+    return merge({
+      title: L[1], date: L[2],
+      start: n[0], dGroup: n[1], pGroup: n[2], lunch: n[3], lunchAfter: n[4], dSemi: n[5],
+      dFinal: n[6], pFinal: n[7], courts: n[8], win: n[9], draw: n[10], loss: n[11],
+      mode: n[12] ? 'mixed' : 'block',
+      sizes, names,
+      res: sizes.map((sz, g) => pull(resParts[g] || '', sz * (sz - 1) / 2)),
+      rF: liftKO(L[7].split(',').map(m => pull(m, 3))),
+      dQuarter: n[5], qf: false, hf: true, kf: true,
+      ts: Number(L[8] || 0), club: L[9] === undefined ? DEFAULTS.club : L[9],
+      pwSalt: L[10] || '', pwHash: L[11] || '',
+    });
+  }
+  // Version 1 und 2: feste Struktur 6 + 7
+  return merge({
+    title: L[1], date: L[2],
+    start: n[0], dGroup: n[1], pGroup: n[2], lunch: n[3], dSemi: n[4], dFinal: n[5],
+    pFinal: n[6], courts: n[7], win: n[8], draw: n[9], loss: n[10],
+    mode: 'block', lunchAfter: 5,
+    sizes: [6, 7], names: [L[4].split('|'), L[5].split('|')],
+    res: [pull(L[6], 15), pull(L[7], 21)],
+    rF: liftKO(L[8].split('|').map(m => pull(m, 3))),
+    dQuarter: n[4], qf: false, hf: true, kf: true,
+    ts: Number(L[9] || 0), club: L[10] === undefined ? DEFAULTS.club : L[10],
+    pwSalt: L[11] || '', pwHash: L[12] || '',
+  });
+}
+
+/* ================= Hilfen ================= */
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c =>
+  ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const clean = v => String(v == null ? '' : v).replace(/[|\r\n]+/g, ' ').replace(/\s+/g, ' ').trim();
+const nowMin = () => { const d = new Date(); return d.getHours() * 60 + d.getMinutes(); };
+const $ = s => document.querySelector(s);
+
+function flash(msg) {
+  const el = document.createElement('div');
+  el.textContent = msg;
+  el.style.cssText = 'position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#0C1A22;' +
+    'color:#fff;padding:10px 16px;border-radius:8px;z-index:99;font-size:14px;max-width:90vw;text-align:center';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 2600);
+}
+
+/* Wie viele Spiele sind erfasst? */
+function progress(s) {
+  const ids = bracketPlan(s).games.map(g => g.id);
+  let done = 0;
+  s.res.forEach(g => g.forEach(r => { if (r) done++; }));
+  ids.forEach(i => { if ((s.rF[i] || []).some(x => x)) done++; });
+  const total = totalGroupMatches(s) + ids.length;
+  return { done, total, pct: total ? Math.round(done / total * 100) : 0 };
+}
+
+/* ================= QR als SVG ================= */
+function qrSVG(text, level) {
+  let m;
+  try { m = qrMatrix(text, level || 'L'); }
+  catch (e) { return '<p class="muted">' + esc(e.message) + '</p>'; }
+  const n = m.length, q = 4, size = n + 2 * q;
+  let d = '';
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++)
+    if (m[y][x]) d += `M${x + q} ${y + q}h1v1h-1z`;
+  return `<svg viewBox="0 0 ${size} ${size}" shape-rendering="crispEdges" role="img" aria-label="QR-Code">` +
+    `<rect width="${size}" height="${size}" fill="#fff"/><path d="${d}" fill="#0C1A22"/></svg>`;
+}
+
+/* ================= Ansichten ================= */
+function ribbon(s) {
+  const t0 = s.groupStart, t1 = s.end, span = Math.max(1, t1 - t0);
+  const segs = [];
+  if (s.lunchFrom !== null) {
+    segs.push({ c: 'a', t: 'Gruppen 1. Teil', f: t0, o: s.lunchFrom });
+    segs.push({ c: 'l', t: 'Mittag', f: s.lunchFrom, o: s.lunchTo });
+    segs.push({ c: 'b', t: 'Gruppen 2. Teil', f: s.lunchTo, o: s.groupEnd });
+  } else {
+    segs.push({ c: 'a', t: 'Gruppenphase', f: t0, o: s.groupEnd });
+  }
+  segs.push({ c: 'f', t: 'Finalrunde', f: s.groupEnd, o: t1 });
+  const now = nowMin();
+  const marker = (now > t0 && now < t1)
+    ? `<div class="now" style="left:${((now - t0) / span * 100).toFixed(2)}%"></div>` : '';
+  const p = progress(st);
+  const mid = s.lunchFrom !== null
+    ? `Mittag ${hhmm(s.lunchFrom)} · Final ${hhmm(s.F[3].from)}`
+    : `Final ${hhmm(s.F[3].from)}`;
+  return `<div class="ribbon">
+    <div class="cap"><h2>Turniertag</h2>
+      <span class="prog">${p.done} von ${p.total} Spielen erfasst</span></div>
+    <div class="bars">${segs.map(g =>
+      `<div class="seg ${g.c}" style="width:${((g.o - g.f) / span * 100).toFixed(2)}%" `
+      + `title="${esc(g.t)} ${hhmm(g.f)}–${hhmm(g.o)}">`
+      + `${(g.o - g.f) / span > .13 ? esc(g.t) : ''}</div>`).join('')}${marker}</div>
+    <div class="lbl"><span>Start ${hhmm(t0)}</span><span>${mid}</span><span>Ende ${hhmm(t1)}</span></div>
+    <div class="track"><i style="width:${p.pct}%"></i></div>
+  </div>`;
+}
+
+function matchRow(m, kind) {
+  const played = kind === 'g' ? !!m.res : m.ev.played;
+  let sc;
+  if (kind === 'g') {
+    sc = m.res ? `${m.res[0]}<span class="muted">:</span>${m.res[1]}` : '–&#8202;:&#8202;–';
+  } else {
+    sc = m.ev.played ? `${m.ev.sa}<span class="muted">:</span>${m.ev.sb}` : '–&#8202;:&#8202;–';
+  }
+  const live = nowMin() >= m.from && nowMin() < m.to;
+  let wa = '', wb = '';
+  if (kind === 'g' && m.res) { if (m.res[0] > m.res[1]) wa = 'b'; else if (m.res[1] > m.res[0]) wb = 'b'; }
+  if (kind === 'f' && m.ev.winner) { if (m.ev.winner === m.nameA) wa = 'b'; else wb = 'b'; }
+  const tag = RO ? 'div' : 'button';
+  const attr = RO ? '' : ` type="button" data-edit="${kind === 'g' ? 'g' + m.g + '-' + m.idx : 'f' + m.id}"`;
+  return `<${tag} class="match${live ? ' live' : ''}${played ? ' done' : ''}"${attr}>
+    <div class="when">${hhmm(m.from)}<div class="ct">Feld ${m.court}</div></div>
+    <div class="who">
+      <span>${wa ? '<b>' : ''}${esc(m.nameA)}${wa ? '</b>' : ''}</span>
+      <span class="vs">gegen</span>
+      <span>${wb ? '<b>' : ''}${esc(m.nameB)}${wb ? '</b>' : ''}</span>
+    </div>
+    <div class="sc mono${played ? '' : ' empty'}">${sc}</div>
+  </${tag}>`;
+}
+
+function viewJetzt(s, fr) {
+  const all = s.matches.map(m => ({ m, k: 'g' })).concat(fr.games.map(m => ({ m, k: 'f' })));
+  const n = nowMin();
+  const live = all.filter(x => n >= x.m.from && n < x.m.to);
+  const next = all.filter(x => x.m.from > n).sort((a, b) => a.m.from - b.m.from).slice(0, 3);
+
+  let h = ribbon(s);
+  if (live.length) {
+    h += `<section><div class="hd"><h2>Läuft jetzt</h2><span class="note">${hhmm(n)}</span></div>
+      <div class="live-wrap">${live.map(x => `<div class="livecard">
+        <div class="k">Feld ${x.m.court} · bis ${hhmm(x.m.to)}</div>
+        <div class="t">${esc(x.m.nameA)}<br>${esc(x.m.nameB)}</div>
+        <div class="m">${x.k === 'f' ? esc(x.m.label) : 'Gruppe ' + GL(x.m.g) + ' · Runde ' + (x.m.round + 1)}</div>
+      </div>`).join('')}</div></section>`;
+  } else {
+    const done = n >= s.end, early = n < s.groupStart;
+    h += `<section><div class="info"><b>${done ? 'Turnier beendet.' : early ? 'Turnier startet um ' + hhmm(s.groupStart) + '.' : 'Gerade Pause.'}</b>
+      ${done ? 'Die Schlussrangliste steht im Reiter «Rangliste».' : next.length ? 'Nächster Anpfiff um ' + hhmm(next[0].m.from) + '.' : ''}</div></section>`;
+  }
+  if (next.length) {
+    h += `<section><div class="hd"><h2>Als Nächstes</h2></div>
+      <div class="card">${next.map(x => matchRow(x.m, x.k)).join('')}</div></section>`;
+  }
+  h += `<section><div class="hd"><h2>Spitze der Gruppen</h2><span class="note">Zwischenstand</span></div>
+    <div class="grid">
+      ${fr.tabs.map((rows, g) => `<div class="tw"><table>
+        <thead><tr><th>#</th><th>Gruppe ${GL(g)}</th><th>Sp</th><th>Pkt</th><th>+/−</th></tr></thead>
+        <tbody>${rows.slice(0, 3).map(r => `<tr><td>${r.rank}</td><td>${esc(r.name)}</td><td>${r.sp}</td><td>${r.pts}</td><td>${r.diff > 0 ? '+' : ''}${r.diff}</td></tr>`).join('')}</tbody>
+      </table></div>`).join('')}
+    </div></section>`;
+  return h;
+}
+
+function viewGroup(s, fr, g) {
+  const list = s.byGroup[g] || [];
+  const tab = fr.tabs[g] || [];
+  const size = st.sizes[g];
+  let rows = '', last = -1;
+  list.slice().sort((a, b) => a.from - b.from || a.court - b.court).forEach(m => {
+    if (m.round !== last) { rows += `<div class="roundhead">Runde ${m.round + 1}</div>`; last = m.round; }
+    rows += matchRow(m, 'g');
+  });
+  const note = size % 2 ? 'Pro Runde pausiert ein Team.' : 'Alle Teams spielen in jeder Runde.';
+  return `<section><div class="hd"><h2>Gruppe ${GL(g)}</h2>
+      <span class="note">${size} Teams · ${list.length} Spiele · 1 Satz · ${note}</span></div>
+    <div class="card">${rows || '<div class="roundhead">Keine Spiele</div>'}</div>
+    ${RO ? '' : '<p class="muted"><small>Spiel antippen, um das Resultat zu erfassen.</small></p>'}</section>
+  <section><div class="hd"><h2>Tabelle ${GL(g)}</h2>
+      <span class="note">Punkte · Differenz · erzielte Punkte</span></div>
+    <div class="tw"><table>
+      <thead><tr><th>#</th><th>Team</th><th>Sp</th><th>S</th><th>U</th><th>N</th><th>Pkt</th><th>+</th><th>−</th><th>+/−</th></tr></thead>
+      <tbody>${tab.map(r => `<tr><td>${r.rank}</td><td>${esc(r.name)}</td><td>${r.sp}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td><b>${r.pts}</b></td><td>${r.pf}</td><td>${r.pa}</td><td>${r.diff > 0 ? '+' : ''}${r.diff}</td></tr>`).join('')}</tbody>
+    </table></div></section>`;
+}
+
+function viewFinal(s, fr) {
+  const plan = s.plan;
+  const stageName = { qf: 'Viertelfinals', hf: 'Halbfinals', kf: 'Kleiner Final', fin: 'Final' };
+  let rows = '';
+  ['qf', 'hf', 'kf', 'fin'].forEach(stg => {
+    const gs = fr.games.filter(g => g.stage === stg);
+    if (!gs.length) return;
+    rows += `<div class="roundhead">${stageName[stg]}</div>`;
+    gs.forEach(g => { rows += matchRow(g, 'f'); });
+  });
+  const parts = [];
+  if (plan.qf) parts.push('Viertelfinals');
+  if (plan.hf) parts.push('Halbfinals');
+  if (plan.kf) parts.push('kleiner Final');
+  if (plan.fin) parts.push('Final');
+
+  return `<section><div class="hd"><h2>Finalrunde</h2>
+      <span class="note">${parts.join(' · ') || 'keine Endrunde'} · ${plan.need} Qualifizierte</span></div>
+    ${plan.off.length ? `<div class="info"><b>Nicht gespielt:</b> ${esc(plan.off.join(', '))}.</div>` : ''}
+    <div class="card">${rows || '<div class="roundhead">Keine Endrunde</div>'}</div></section>
+  <section><div class="card">
+    ${fr.games.map(g => `<div class="match" style="grid-template-columns:1fr">
+      <div><div class="when" style="font-size:11px;letter-spacing:.06em;text-transform:uppercase">${esc(g.label)} · ${hhmm(g.from)}–${hhmm(g.to)} · Feld ${g.court} · ${g.nSets} Sätze</div>
+      <div class="who" style="font-size:17px;margin-top:4px">${esc(g.nameA)} <span class="vs" style="display:inline">gegen</span> ${esc(g.nameB)}</div>
+      <div class="mono muted" style="font-size:12px;margin-top:4px">${esc(g.srcA)} · ${esc(g.srcB)}${g.ev.played ? ' — Sätze ' + g.ev.sa + ':' + g.ev.sb + ' (' + g.ev.ta + ':' + g.ev.tb + ' Punkte)' : ''}</div>
+      ${g.ev.tie ? '<div class="mono" style="color:var(--warn,#A32100);font-size:12px">Gleichstand – Entscheidung offen</div>' : ''}
+      ${g.ev.winner ? '<div class="mono" style="color:var(--ok);font-size:12px;margin-top:2px">Sieger: ' + esc(g.ev.winner) + '</div>' : ''}
+      </div></div>`).join('')}
+  </div></section>
+  <div class="info">Qualifiziert sind die ${plan.need} besten Teams über alle Gruppen: zuerst zählt der Gruppenrang, dann Punkte pro Spiel. Gesetzt wird ${plan.qf ? '1–8, 4–5, 2–7 und 3–6' : plan.hf ? '1 gegen 4 und 2 gegen 3' : '1 gegen 2'}; die App dreht die Paarungen, um Gruppenduelle möglichst zu vermeiden.</div>
+  <div class="info">Viertel- und Halbfinals gehen über 2 Sätze; bei 1:1 entscheidet die Gesamtpunktzahl. Kleiner Final und Final gehen über 3 Sätze, der dritte nur bei 1:1.</div>`;
+}
+
+function viewRang(s, fr) {
+  const r = finalRanking(st, s);
+  return `<section><div class="hd"><h2>Schlussrangliste</h2>
+      <span class="note">${r.enough ? 'Plätze 1–4 aus der Finalrunde' : 'nur Gruppenphase'}</span></div>
+    <div class="tw"><table>
+      <thead><tr><th>#</th><th>Team</th><th>Gr.</th><th>Pkt</th><th>+/−</th><th style="text-align:left">Entschieden durch</th></tr></thead>
+      <tbody>${r.list.map(e => `<tr class="${e.place <= 3 ? 'p' + e.place : ''}">
+        <td>${e.place <= 3 ? '<span class="badge b' + e.place + '">' + e.place + '</span>' : e.place}</td><td>${e.name ? esc(e.name) : '<span class="muted">offen</span>'}</td>
+        <td>${e.grp || '—'}</td><td>${e.pts === undefined ? '—' : e.pts}</td>
+        <td>${e.diff === undefined ? '—' : (e.diff > 0 ? '+' : '') + e.diff}</td>
+        <td style="text-align:left;font-family:var(--sans);font-size:12.5px;white-space:normal" class="muted">${esc(e.why)}</td></tr>`).join('')}</tbody>
+    </table></div></section>
+  <div class="info">Die Plätze ab ${r.enough ? '5' : '1'} werden ohne weitere Spiele aus der Gruppenphase abgeleitet: zuerst der Rang in der Gruppe, dann <b>Punkte pro Spiel</b>, dann Punktedifferenz pro Spiel. Der Bezug auf einzelne Spiele ist nötig, damit unterschiedlich grosse Gruppen vergleichbar bleiben.</div>`;
+}
+
+function fld(label, id, val, type, extra) {
+  return `<div class="fld"><label for="${id}">${esc(label)}</label>
+    <input id="${id}" type="${type || 'number'}" value="${esc(val)}" ${extra || ''}></div>`;
+}
+
+function viewSetup() {
+  const sch = schedule(st), slots = sch.slots.length;
+  const la = clamp(st.lunchAfter | 0, 0, Math.max(0, slots - 1));
+  const lunchTime = (st.lunch > 0 && la > 0 && sch.lunchFrom !== null)
+    ? `um ${hhmm(sch.lunchFrom)}` : 'keine Pause';
+  return `<section><div class="hd"><h2>Turnier</h2></div><div class="grid">
+      ${fld('Verein', 's_club', st.club, 'text')}
+      ${fld('Titel', 's_title', st.title, 'text')}
+      ${fld('Datum / Ort', 's_date', st.date, 'text', 'placeholder="z. B. 1. August, Uerkheim"')}
+    </div></section>
+
+  <section><div class="hd"><h2>Gruppen und Teams</h2>
+      <span class="note">${totalTeams(st)} Teams · ${totalGroupMatches(st)} Gruppenspiele</span></div>
+    <div class="grid">
+      <div class="fld"><label for="s_groups">Anzahl Gruppen</label>
+        <select id="s_groups">${Array.from({ length: MAXG }, (_, i) => i + 1).map(c =>
+          `<option value="${c}"${st.sizes.length === c ? ' selected' : ''}>${c} Gruppe${c > 1 ? 'n' : ''}</option>`).join('')}</select></div>
+      ${st.sizes.map((n, g) => `<div class="fld"><label for="s_sz${g}">Teams in Gruppe ${GL(g)}</label>
+        <input id="s_sz${g}" data-size="${g}" type="number" min="${MINSZ}" max="${MAXSZ}" inputmode="numeric" value="${n}"></div>`).join('')}
+    </div>
+    <p class="muted" style="margin-top:8px"><small>${MINSZ} bis ${MAXSZ} Teams pro Gruppe, höchstens ${MAXG} Gruppen.
+      Beim Verkleinern gehen die Resultate der wegfallenden Spiele verloren.</small></p>
+  </section>
+
+  <section><div class="hd"><h2>Ablauf der Gruppenphase</h2></div><div class="grid">
+      <div class="fld"><label for="s_mode">Reihenfolge</label>
+        <select id="s_mode">
+          <option value="block"${st.mode === 'block' ? ' selected' : ''}>Gruppe für Gruppe (Block)</option>
+          <option value="mixed"${st.mode === 'mixed' ? ' selected' : ''}>Gruppen durchmischt</option>
+        </select></div>
+      <div class="fld"><label for="s_lunchAfter">Mittagspause nach Zeitblock (${lunchTime})</label>
+        <input id="s_lunchAfter" type="number" min="0" max="${Math.max(0, slots - 1)}" inputmode="numeric" value="${la}"></div>
+    </div>
+    <p class="muted" style="margin-top:8px"><small>Die Gruppenphase umfasst ${slots} Zeitblöcke.
+      Im Block-Ablauf spielt jede Gruppe am Stück, durchmischt laufen die Gruppen parallel auf den Feldern.
+      0 bedeutet keine Mittagspause.</small></p>
+  </section>
+
+  <section><div class="hd"><h2>Endrunde</h2>
+      <span class="note">${sch.plan.games.length} Spiele · ${sch.plan.need} Qualifizierte</span></div>
+    <div class="card" style="padding:12px 14px">
+      <label class="check"><input type="checkbox" id="s_qf"${st.qf ? ' checked' : ''}${st.hf ? '' : ' disabled'}>
+        Viertelfinal <span class="muted">— 8 Qualifizierte, 4 Spiele über 2 Sätze</span></label>
+      <label class="check"><input type="checkbox" id="s_hf"${st.hf ? ' checked' : ''}>
+        Halbfinal <span class="muted">— 4 Qualifizierte, 2 Spiele über 2 Sätze</span></label>
+      <label class="check"><input type="checkbox" id="s_kf"${st.kf ? ' checked' : ''}${st.hf ? '' : ' disabled'}>
+        Kleiner Final <span class="muted">— Spiel um Platz 3/4 über 3 Sätze</span></label>
+      <label class="check" style="opacity:.6"><input type="checkbox" checked disabled>
+        Final <span class="muted">— wird immer gespielt</span></label>
+    </div>
+    ${sch.plan.off.length ? `<div class="info" style="margin-top:9px"><b>Derzeit nicht möglich:</b> ${esc(sch.plan.off.join(', '))}.</div>` : ''}
+    <p class="muted" style="margin-top:8px"><small>Viertelfinal und kleiner Final setzen das Halbfinal voraus –
+      ohne Halbfinal gibt es weder acht Qualifizierte noch Halbfinalverlierer. Ohne kleinen Final werden
+      die Plätze 3 und 4 nach der Setzung vergeben.</small></p>
+  </section>
+
+  <section><div class="hd"><h2>Zeiten</h2><span class="note">Minuten, ausser Startzeit</span></div><div class="grid">
+      ${fld('Startzeit am Morgen', 's_start', hhmm(st.start), 'text', 'inputmode="numeric" placeholder="09:00"')}
+      ${fld('Spieldauer Gruppenspiel', 's_dGroup', st.dGroup, 'number', 'min="1" inputmode="numeric"')}
+      ${fld('Pause zwischen Gruppenspielen', 's_pGroup', st.pGroup, 'number', 'min="0" inputmode="numeric"')}
+      ${fld('Mittagspause', 's_lunch', st.lunch, 'number', 'min="0" inputmode="numeric"')}
+      ${fld('Dauer Viertelfinal (2 Sätze)', 's_dQuarter', st.dQuarter, 'number', 'min="1" inputmode="numeric"')}
+      ${fld('Dauer Halbfinal (2 Sätze)', 's_dSemi', st.dSemi, 'number', 'min="1" inputmode="numeric"')}
+      ${fld('Dauer Finalspiel (3 Sätze)', 's_dFinal', st.dFinal, 'number', 'min="1" inputmode="numeric"')}
+      ${fld('Pause in der Finalrunde', 's_pFinal', st.pFinal, 'number', 'min="0" inputmode="numeric"')}
+      <div class="fld"><label for="s_courts">Anzahl Spielfelder</label>
+        <select id="s_courts">${[1, 2, 3, 4, 5, 6].map(c => `<option value="${c}"${st.courts === c ? ' selected' : ''}>${c} Feld${c > 1 ? 'er' : ''}</option>`).join('')}</select></div>
+    </div>
+    <p class="muted" style="margin-top:8px"><small>Turnierende ${hhmm(sch.end)}.</small></p>
+  </section>
+
+  <section><div class="hd"><h2>Punkte</h2><span class="note">Gruppenphase</span></div><div class="grid">
+      ${fld('Punkte pro Sieg', 's_win', st.win, 'number', 'inputmode="numeric"')}
+      ${fld('Punkte pro Unentschieden', 's_draw', st.draw, 'number', 'inputmode="numeric"')}
+      ${fld('Punkte pro Niederlage', 's_loss', st.loss, 'number', 'inputmode="numeric"')}
+    </div></section>
+
+  ${st.sizes.map((n, g) => `<section><div class="hd"><h2>Teams Gruppe ${GL(g)}</h2>
+      <span class="note">${n} Teams</span></div><div class="grid">
+      ${st.names[g].map((t, i) => `<div class="fld name"><label for="t${g}_${i}"><span class="code">${GL(g)}${i + 1}</span></label>
+        <input id="t${g}_${i}" data-team="${g}-${i}" type="text" value="${esc(t)}"></div>`).join('')}
+    </div></section>`).join('')}
+
+  <section><div class="hd"><h2>Bearbeitung schützen</h2>
+      <span class="note">${st.pwHash ? 'Passwort gesetzt' : 'kein Passwort'}</span></div>
+    ${st.pwHash ? `<div class="info">Die Seite startet auf diesem und auf allen anderen Geräten im
+        Lesemodus. Zum Bearbeiten wird das Passwort verlangt.</div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn ghost sm" id="btnPwChange">Passwort ändern</button>
+        <button class="btn ghost sm" id="btnPwOff">Schutz entfernen</button>
+      </div>`
+    : `<div class="grid">
+        <div class="fld"><label for="pwNew">Neues Passwort</label>
+          <input id="pwNew" type="password" autocomplete="new-password"></div>
+        <div class="fld"><label for="pwNew2">Wiederholen</label>
+          <input id="pwNew2" type="password" autocomplete="new-password"></div>
+      </div>
+      <div class="row" style="margin-top:10px"><button class="btn sm" id="btnPwOn">Passwort setzen</button></div>`}
+    <p class="muted" style="margin-top:8px"><small>Der Schutz verhindert versehentliches Umschalten.
+      Wer sich auskennt, umgeht ihn im Browser – die Seite läuft vollständig auf dem Gerät.
+      Wähle trotzdem kein triviales Passwort.</small></p>
+  </section>
+
+  <section><div class="hd"><h2>Daten</h2></div>
+    <div class="row">
+      <button class="btn ghost sm" id="btnExport">Sicherung herunterladen</button>
+      <button class="btn ghost sm" id="btnImport">Sicherung einlesen</button>
+      <button class="btn ghost sm" id="btnClearRes">Alle Resultate löschen</button>
+      <input type="file" id="fileImp" accept="application/json" hidden>
+    </div></section>`;
+}
+
+function viewTeilen(s) {
+  const base = (st.base || '').trim() || location.href.split('#')[0];
+  const snapUrl = base + '#d=' + encodeState(st);
+  const liveUrl = base + '#v';
+  const modeTxt = {
+    shared: 'Diese Seite liegt in einem geteilten Speicher. Alle, die den Link öffnen, sehen laufend denselben Stand.',
+    local: 'Die Daten liegen nur in diesem Browser. Andere Geräte sehen sie nur über einen Snapshot-Link.',
+    memory: 'Der Browser lässt keine Speicherung zu. Die Daten gehen beim Neuladen verloren – lade regelmässig eine Sicherung herunter.'
+  }[Store.mode];
+  const tooLong = snapUrl.length > 1200;
+
+  return `<section><div class="hd"><h2>Lesezugang für die Teams</h2></div>
+    <div class="info"><b>So funktioniert es:</b> ${esc(modeTxt)}</div>
+
+    <div class="fld" style="margin:12px 0">
+      <label for="s_base">Öffentliche Adresse dieser Seite</label>
+      <input id="s_base" type="url" value="${esc(base)}" placeholder="https://…" style="font-size:13px">
+    </div>
+    <p class="muted"><small>Die Adresse muss von den Handys der Teams erreichbar sein. Eine lokal geöffnete Datei (file://…) funktioniert nicht – lade die Datei vorher irgendwo hoch.</small></p>
+  </section>
+
+  <section><div class="hd"><h2>Snapshot-QR</h2><span class="note">funktioniert immer</span></div>
+    <div class="qrbox">${tooLong ? '<p class="muted">Der Stand ist für einen QR-Code zu lang. Kürze die Teamnamen oder nutze den Live-Link.</p>' : qrSVG(snapUrl, 'L')}
+      <div class="cap">${esc(snapUrl.slice(0, 90))}${snapUrl.length > 90 ? '…' : ''}<br>${snapUrl.length} Zeichen</div>
+      <div class="row"><button class="btn sm ghost" data-copy="${esc(snapUrl)}">Link kopieren</button></div>
+    </div>
+    <p class="muted" style="margin-top:8px"><small>Der QR-Code enthält den kompletten aktuellen Stand. Er ändert sich mit jedem erfassten Resultat – für aktuelle Zahlen scannen die Teams neu. Ideal auf einem Bildschirm am Schreibtisch der Turnierleitung.</small></p>
+  </section>
+
+  <section><div class="hd"><h2>Live-Link</h2><span class="note">${Store.mode === 'shared' ? 'aktiv' : 'nur mit geteiltem Speicher'}</span></div>
+    <div class="qrbox">${qrSVG(liveUrl, 'M')}
+      <div class="cap">${esc(liveUrl)}</div>
+      <div class="row"><button class="btn sm ghost" data-copy="${esc(liveUrl)}">Link kopieren</button></div>
+    </div>
+    <p class="muted" style="margin-top:8px"><small>${Store.mode === 'shared'
+      ? 'Dieser Link zeigt immer den aktuellen Stand, ohne erneutes Scannen. Einmal ausdrucken und aufhängen genügt.'
+      : 'Dieser Link öffnet die Seite im Lesemodus, zeigt aber nur, was auf dem jeweiligen Gerät gespeichert ist. Für echte Live-Anzeige braucht es einen geteilten Speicher – siehe Hinweis unten.'}</small></p>
+  </section>
+
+  <div class="info"><b>Nicht als Zugriffsschutz gedacht.</b> Der Lesemodus verhindert versehentliches Ändern, nicht absichtliches. Wer den Link hat, kann in der Adresszeile auf den Bearbeitungsmodus wechseln. Für ein Beachturnier reicht das; für alles Heiklere nicht.</div>`;
+}
+
+/* ================= Dialog zur Resultaterfassung ================= */
+function sheetFor(kind, key, idx) {
+  const s = schedule(st), fr = finalRound(st, s);
+  let title, srcTxt, nameA, nameB, sets, nSets;
+  if (kind === 'g') {
+    const m = (s.byGroup[key] || []).find(x => x.idx === idx);
+    if (!m) return;
+    title = `Gruppe ${GL(key)} · Runde ${m.round + 1}`;
+    srcTxt = `${hhmm(m.from)}–${hhmm(m.to)} · Feld ${m.court}`;
+    nameA = m.nameA; nameB = m.nameB; nSets = 1;
+    sets = [m.res ? m.res.slice() : [null, null]];
+  } else {
+    const g = fr.games.find(x => x.id === idx);
+    if (!g) return;
+    title = g.label;
+    srcTxt = `${hhmm(g.from)}–${hhmm(g.to)} · Feld ${g.court} · ${g.srcA} / ${g.srcB}`;
+    nameA = g.nameA; nameB = g.nameB; nSets = g.nSets;
+    sets = st.rF[idx].slice(0, nSets).map(x => x ? x.slice() : [null, null]);
+  }
+  openSheet = { kind, key, idx, sets, nSets };
+
+  const stepper = (si, side, val) => `<div class="stp">
+      <button type="button" data-step="${si},${side},-1" aria-label="weniger">−</button>
+      <input type="text" inputmode="numeric" pattern="[0-9]*" data-in="${si},${side}" value="${val === null ? '' : val}" aria-label="Punkte">
+      <button type="button" data-step="${si},${side},1" aria-label="mehr">+</button>
+    </div>`;
+
+  const body = `<div class="back" id="back"><div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(title)}">
+    <h3>${esc(title)}</h3><div class="src">${esc(srcTxt)}</div>
+    <div class="names"><div>·</div><div>${esc(nameA)}</div><div>${esc(nameB)}</div></div>
+    ${sets.map((sv, i) => `<div class="setrow"><div class="n">${nSets === 1 ? 'Satz' : 'S' + (i + 1)}</div>
+        ${stepper(i, 0, sv[0])}${stepper(i, 1, sv[1])}</div>`).join('')}
+    ${nSets === 3 ? '<p class="muted"><small>Satz 3 nur bei Satzgleichstand 1:1 ausfüllen.</small></p>' : ''}
+    ${nSets === 2 ? '<p class="muted"><small>Bei 1:1 Sätzen entscheidet die Gesamtpunktzahl.</small></p>' : ''}
+    <div class="row" style="margin-top:14px">
+      <button class="btn" id="okBtn">Speichern</button>
+      <button class="btn ghost" id="cancelBtn">Abbrechen</button>
+      <button class="btn ghost" id="clrBtn" style="margin-left:auto">Leeren</button>
+    </div>
+  </div></div>`;
+  const host = document.createElement('div');
+  host.innerHTML = body;
+  document.body.appendChild(host.firstElementChild);
+  const el = $('#back');
+  el.querySelector('input').focus();
+
+  el.addEventListener('click', e => { if (e.target === el) closeSheet(); });
+  el.querySelectorAll('[data-step]').forEach(b => b.addEventListener('click', () => {
+    const [si, side, d] = b.dataset.step.split(',').map(Number);
+    const inp = el.querySelector(`[data-in="${si},${side}"]`);
+    const cur = inp.value === '' ? 0 : parseInt(inp.value, 10) || 0;
+    inp.value = Math.max(0, Math.min(99, cur + d));
+  }));
+  $('#cancelBtn').onclick = closeSheet;
+  $('#clrBtn').onclick = () => { el.querySelectorAll('[data-in]').forEach(i => i.value = ''); };
+  $('#okBtn').onclick = () => {
+    const vals = [];
+    for (let i = 0; i < nSets; i++) {
+      const a = el.querySelector(`[data-in="${i},0"]`).value.trim();
+      const b = el.querySelector(`[data-in="${i},1"]`).value.trim();
+      vals.push((a === '' || b === '') ? null : [Math.max(0, parseInt(a, 10) || 0), Math.max(0, parseInt(b, 10) || 0)]);
+    }
+    if (kind === 'g') {
+      st.res[key][idx] = vals[0];
+    } else {
+      const cur = st.rF[idx];
+      for (let i = 0; i < nSets; i++) cur[i] = vals[i];
+      if (nSets === 2) cur[2] = null;
+    }
+    closeSheet(); save(true);
+  };
+  document.addEventListener('keydown', escClose);
+}
+function escClose(e) { if (e.key === 'Escape') closeSheet(); }
+function closeSheet() {
+  const el = $('#back'); if (el) el.remove();
+  openSheet = null;
+  document.removeEventListener('keydown', escClose);
+}
+
+function askPassword() {
+  const host = document.createElement('div');
+  host.innerHTML = `<div class="back" id="back"><div class="sheet" role="dialog" aria-modal="true"
+      aria-label="Bearbeiten freischalten">
+    <h3>Bearbeiten freischalten</h3>
+    <div class="src">Passwort der Turnierleitung</div>
+    <div class="pwrow"><input id="pwIn" type="password" autocomplete="current-password"
+      aria-label="Passwort" placeholder="Passwort"></div>
+    <label class="check"><input type="checkbox" id="pwRem" checked> Auf diesem Gerät merken</label>
+    <p id="pwMsg" class="pwmsg" role="alert"></p>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="pwOk">Freischalten</button>
+      <button class="btn ghost" id="pwCancel">Abbrechen</button>
+    </div>
+    <p class="muted" style="margin-top:10px"><small>Der Schutz verhindert versehentliches Umschalten.
+      Er ist kein Zugriffsschutz – die Seite läuft vollständig im Browser.</small></p>
+  </div></div>`;
+  document.body.appendChild(host.firstElementChild);
+  const el = $('#back');
+  openSheet = { pw: true };
+  const inp = $('#pwIn');
+  inp.focus();
+  const close = () => { el.remove(); openSheet = null; document.removeEventListener('keydown', escPw); };
+  const escPw = e => { if (e.key === 'Escape') close(); };
+  document.addEventListener('keydown', escPw);
+  el.addEventListener('click', e => { if (e.target === el) close(); });
+  $('#pwCancel').onclick = close;
+  const submit = () => {
+    const btn = $('#pwOk');
+    btn.textContent = 'Prüfe …';
+    setTimeout(() => {
+      const ok = derivePw(inp.value, st.pwSalt) === st.pwHash;
+      if (!ok) {
+        btn.textContent = 'Freischalten';
+        $('#pwMsg').textContent = 'Passwort stimmt nicht.';
+        inp.select();
+        return;
+      }
+      setUnlocked(true, $('#pwRem').checked);
+      close(); RO = false; render();
+    }, 30);
+  };
+  $('#pwOk').onclick = submit;
+  inp.onkeydown = e => { if (e.key === 'Enter') submit(); };
+}
+
+/* ================= Rendern ================= */
+function tabList() {
+  const t = [['jetzt', 'Jetzt']];
+  st.sizes.forEach((_, g) => t.push(['g' + g, 'Gruppe ' + GL(g)]));
+  t.push(['final', 'Finalrunde'], ['rang', 'Rangliste'], ['setup', 'Einstellungen'], ['teilen', 'Teilen']);
+  return t;
+}
+
+function busy() {
+  if (openSheet) return true;
+  const a = document.activeElement;
+  return !!(a && /^(INPUT|SELECT|TEXTAREA)$/.test(a.tagName));
+}
+
+function render() {
+  const focusId = (document.activeElement || {}).id;
+  const s = schedule(st), fr = finalRound(st, s);
+  $('#clb').textContent = st.club || '';
+  $('#ttl').textContent = st.title || 'Beachvolleyball-Turnier';
+  $('#dte').textContent = st.date || '';
+  const syncTxt = SNAP ? 'Snapshot' : { shared: 'Live geteilt', local: 'Dieses Gerät', memory: 'Nur Sitzung' }[Store.mode];
+  $('#syncChip').textContent = syncTxt;
+  $('#syncChip').className = 'chip' + (Store.mode === 'memory' && !SNAP ? ' warn' : '');
+  $('#modeChip').innerHTML = RO
+    ? '<button type="button" id="toEdit" title="Auf Bearbeiten umschalten">Nur lesen '
+      + (st.pwHash ? '&#128274;' : '⇄') + '</button>'
+    : '<button type="button" id="toRead" title="Auf Nur lesen umschalten">Bearbeiten ⇄</button>';
+  $('#modeChip').className = 'chip' + (RO ? '' : ' edit');
+
+  const tabs = tabList().filter(t => !RO || (t[0] !== 'setup' && t[0] !== 'teilen'));
+  if (!tabs.some(t => t[0] === view)) view = 'jetzt';
+  $('#nav').innerHTML = tabs.map(([k, l]) =>
+    `<button type="button" data-tab="${k}" aria-current="${view === k}">${l}</button>`).join('');
+
+  let html;
+  if (view === 'jetzt') html = viewJetzt(s, fr);
+  else if (/^g\d+$/.test(view)) html = viewGroup(s, fr, parseInt(view.slice(1), 10));
+  else if (view === 'final') html = viewFinal(s, fr);
+  else if (view === 'rang') html = viewRang(s, fr);
+  else if (view === 'setup') html = viewSetup();
+  else html = viewTeilen(s);
+  $('#main').innerHTML = html;
+
+  $('#nav').querySelectorAll('[data-tab]').forEach(b =>
+    b.onclick = () => { view = b.dataset.tab; render(); window.scrollTo(0, 0); });
+  const te = $('#toEdit'), tr = $('#toRead');
+  if (te) te.onclick = () => {
+    if (st.pwHash && !isUnlocked()) { askPassword(); return; }
+    RO = false; render();
+  };
+  if (tr) tr.onclick = () => { setUnlocked(false); RO = true; render(); };
+
+  $('#main').querySelectorAll('[data-edit]').forEach(b => b.onclick = () => {
+    const v = b.dataset.edit;
+    if (v[0] === 'g') {
+      const [gi, mi] = v.slice(1).split('-').map(Number);
+      sheetFor('g', gi, mi);
+    } else sheetFor('f', null, parseInt(v.slice(1), 10));
+  });
+  $('#main').querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => {
+    try { await navigator.clipboard.writeText(b.dataset.copy); flash('Link kopiert'); }
+    catch (e) { flash('Kopieren nicht möglich – Link manuell markieren'); }
+  });
+  if (view === 'setup') wireSetup();
+  if (view === 'teilen') {
+    const bi = $('#s_base');
+    if (bi) bi.onchange = () => { st.base = clean(bi.value); save(); };
+  }
+  syncNavTop();
+  if (focusId) { const el = document.getElementById(focusId); if (el) el.focus(); }
+}
+
+function syncNavTop() {
+  const t = $('.top');
+  if (t) document.documentElement.style.setProperty('--navtop', t.offsetHeight + 'px');
+}
+
+function wireSetup() {
+  const num = (id, k, min) => {
+    const el = document.getElementById(id); if (!el) return;
+    el.onchange = () => {
+      let v = parseInt(el.value, 10);
+      if (isNaN(v)) v = DEFAULTS[k];
+      if (min !== undefined) v = Math.max(min, v);
+      st[k] = v; save();
+    };
+  };
+  const txt = (id, k) => {
+    const el = document.getElementById(id); if (!el) return;
+    el.onchange = () => { st[k] = clean(el.value); el.value = st[k]; save(); };
+  };
+  txt('s_club', 'club'); txt('s_title', 'title'); txt('s_date', 'date');
+  const sEl = $('#s_start');
+  if (sEl) sEl.onchange = () => {
+    const v = parseHHMM(sEl.value);
+    if (v === null) { flash('Startzeit bitte als hh:mm, z. B. 09:00'); sEl.value = hhmm(st.start); return; }
+    st.start = v; save();
+  };
+  num('s_dGroup', 'dGroup', 1); num('s_pGroup', 'pGroup', 0); num('s_lunch', 'lunch', 0);
+  num('s_dQuarter', 'dQuarter', 1); num('s_dSemi', 'dSemi', 1); num('s_dFinal', 'dFinal', 1); num('s_pFinal', 'pFinal', 0);
+  num('s_win', 'win'); num('s_draw', 'draw'); num('s_loss', 'loss');
+  num('s_lunchAfter', 'lunchAfter', 0);
+  const c = $('#s_courts');
+  if (c) c.onchange = () => { st.courts = parseInt(c.value, 10); save(); };
+  [['s_qf', 'qf'], ['s_hf', 'hf'], ['s_kf', 'kf']].forEach(([id, key]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.onchange = () => {
+      st[key] = el.checked;
+      if (key === 'hf' && !el.checked) { st.qf = false; st.kf = false; }
+      normalize(st); save();
+    };
+  });
+  const md = $('#s_mode');
+  if (md) md.onchange = () => { st.mode = md.value === 'mixed' ? 'mixed' : 'block'; save(); };
+  const gr = $('#s_groups');
+  if (gr) gr.onchange = () => {
+    const want = clamp(parseInt(gr.value, 10) || 1, 1, MAXG), have = st.sizes.length;
+    if (want < have) {
+      const lost = st.res.slice(want).some(a => a.some(r => r));
+      if (lost && !confirm('Die hinteren Gruppen enthalten bereits Resultate. Wirklich entfernen?')) {
+        gr.value = have; return;
+      }
+      st.sizes = st.sizes.slice(0, want);
+    } else {
+      while (st.sizes.length < want) st.sizes.push(4);
+    }
+    normalize(st); save();
+  };
+  document.querySelectorAll('[data-size]').forEach(inp => inp.onchange = () => {
+    const g = parseInt(inp.dataset.size, 10);
+    const v = clamp(parseInt(inp.value, 10) || MINSZ, MINSZ, MAXSZ);
+    if (v < st.sizes[g]) {
+      const keep = v * (v - 1) / 2;
+      if (st.res[g].slice(keep).some(r => r) &&
+          !confirm('Beim Verkleinern gehen bereits erfasste Resultate dieser Gruppe verloren. Fortfahren?')) {
+        inp.value = st.sizes[g]; return;
+      }
+    }
+    st.sizes[g] = v; normalize(st); save();
+  });
+  document.querySelectorAll('[data-team]').forEach(inp => inp.onchange = () => {
+    const [g, i] = inp.dataset.team.split('-').map(Number);
+    const v = clean(inp.value) || `Team ${GL(g)}${i + 1}`;
+    inp.value = v; st.names[g][i] = v; save();
+  });
+  const setPw = (val) => {
+    const salt = newSalt();
+    st.pwSalt = salt; st.pwHash = derivePw(val, salt);
+    setUnlocked(true, true); save(true);
+  };
+  const on = $('#btnPwOn');
+  if (on) on.onclick = () => {
+    const a = $('#pwNew').value, b = $('#pwNew2').value;
+    if (a.length < 4) { flash('Bitte mindestens vier Zeichen'); return; }
+    if (a !== b) { flash('Die beiden Eingaben stimmen nicht überein'); return; }
+    on.textContent = 'Setze …';
+    setTimeout(() => { setPw(a); flash('Passwort gesetzt'); }, 30);
+  };
+  const ch = $('#btnPwChange');
+  if (ch) ch.onclick = () => {
+    const v = prompt('Neues Passwort (mindestens vier Zeichen):');
+    if (v === null) return;
+    if (v.length < 4) { flash('Bitte mindestens vier Zeichen'); return; }
+    setPw(v); flash('Passwort geändert');
+  };
+  const off = $('#btnPwOff');
+  if (off) off.onclick = () => {
+    if (!confirm('Schutz wirklich entfernen? Danach kann jeder in den Bearbeitungsmodus wechseln.')) return;
+    setUnlocked(false); st.pwSalt = ''; st.pwHash = ''; save(true); flash('Schutz entfernt');
+  };
+  const ex = $('#btnExport');
+  if (ex) ex.onclick = () => {
+    const copy = Object.assign({}, st);
+    delete copy.pwSalt; delete copy.pwHash;   // Sicherung sperrt niemanden aus
+    const blob = new Blob([JSON.stringify(copy, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'turnier-sicherung.json'; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  };
+  const im = $('#btnImport'), fi = $('#fileImp');
+  if (im) im.onclick = () => fi.click();
+  if (fi) fi.onchange = () => {
+    const f = fi.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try { st = merge(JSON.parse(r.result)); save(true); flash('Sicherung eingelesen'); }
+      catch (e) { flash('Datei konnte nicht gelesen werden'); }
+    };
+    r.readAsText(f);
+  };
+  const cl = $('#btnClearRes');
+  if (cl) cl.onclick = () => {
+    if (!confirm('Wirklich alle erfassten Resultate löschen? Teams und Einstellungen bleiben.')) return;
+    st.res = st.sizes.map(n => Array(n * (n - 1) / 2).fill(null));
+    st.rF = Array.from({ length: 8 }, () => [null, null, null]);
+    save(true); flash('Resultate gelöscht');
+  };
+}
+
+/* ================= Start ================= */
+async function boot() {
+  const hash = location.hash || '';
+  if (hash.startsWith('#d=')) {
+    try { st = decodeState(hash.slice(3)); SNAP = true; RO = true; }
+    catch (e) { flash('Snapshot-Link konnte nicht gelesen werden'); }
+  }
+  if (!SNAP) {
+    Store.detect();
+    const raw = await Store.get();
+    if (raw) st = merge(raw);
+    if (hash === '#v') RO = true;
+  }
+  // Mit gesetztem Passwort startet die Seite gesperrt, bis freigeschaltet wird
+  if (st.pwHash && !isUnlocked()) RO = true;
+  render();
+  window.addEventListener('resize', syncNavTop);
+  setInterval(() => { if (!busy()) render(); }, 30000);   // Uhrzeit / «läuft jetzt»
+  // Zweites Fenster desselben Browsers nachziehen (z. B. QR-Anzeige auf dem Zweitschirm)
+  if (!SNAP && Store.mode === 'local') {
+    window.addEventListener('storage', e => {
+      if (e.key !== KEY || busy()) return;
+      try {
+        const raw = JSON.parse(e.newValue || 'null');
+        if (raw && (raw.ts || 0) > (st.ts || 0)) { st = merge(raw); render(); }
+      } catch (err) { /* unlesbar, ignorieren */ }
+    });
+  }
+  if (!SNAP && Store.mode === 'shared') {
+    setInterval(async () => {
+      if (busy()) return;
+      const raw = await Store.get();
+      if (raw && (raw.ts || 0) > (st.ts || 0)) { st = merge(raw); render(); }
+    }, 6000);
+  }
+}
+document.addEventListener('DOMContentLoaded', boot);
+
+</script>
+</body>
+</html>
