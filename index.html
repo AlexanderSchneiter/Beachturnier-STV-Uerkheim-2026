@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B4F71">
+<title>Beachvolleyball-Turnier · Spielplan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E7EDF1; --card:#fff; --ink:#0C1A22; --deep:#0B4F71; --deep2:#0E6796;
+  --sun:#F5B301; --sun-d:#C88F00; --line:#C6D3DB; --muted:#5A7180; --soft:#F3F7F9;
+  --ok:#1B7A57; --warn:#B3421A;
+  --sans:'IBM Plex Sans','Segoe UI',Roboto,system-ui,sans-serif;
+  --cond:'IBM Plex Sans Condensed','Roboto Condensed','Arial Narrow',var(--sans);
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --r:10px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--sans);
+  font-size:15px; line-height:1.45; -webkit-text-size-adjust:100%;
+  padding-bottom:40px;
+}
+h1,h2,h3{font-family:var(--cond); margin:0; font-weight:600; letter-spacing:.01em}
+.mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
+
+/* ---------- Kopf ---------- */
+.top{
+  position:sticky; top:0; z-index:40; background:var(--deep); color:#fff;
+  padding:10px 14px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  box-shadow:0 1px 0 rgba(0,0,0,.15);
+}
+.top h1{font-size:19px; line-height:1.1; color:#fff}
+.top .sub{font-size:12px; color:#A9CBDE; font-family:var(--mono)}
+.brand{flex:1 1 auto; min-width:0}
+.chips{display:flex; gap:6px; flex:0 0 auto; align-items:center}
+.chip{
+  font-family:var(--mono); font-size:11px; letter-spacing:.03em; text-transform:uppercase;
+  padding:4px 8px; border-radius:99px; background:rgba(255,255,255,.14); color:#fff; white-space:nowrap;
+}
+.chip.edit{background:var(--sun); color:#3A2A00; font-weight:600}
+.chip.warn{background:var(--warn)}
+.chip button{all:unset; cursor:pointer}
+
+/* ---------- Navigation ---------- */
+nav{
+  position:sticky; top:var(--navtop,54px); z-index:35; background:var(--card);
+  border-bottom:1px solid var(--line); display:flex; gap:2px; overflow-x:auto;
+  scrollbar-width:none; padding:0 6px;
+}
+nav::-webkit-scrollbar{display:none}
+nav button{
+  all:unset; cursor:pointer; padding:13px 13px 11px; font-family:var(--cond);
+  font-size:15px; font-weight:600; color:var(--muted); white-space:nowrap;
+  border-bottom:3px solid transparent; min-height:44px; display:flex; align-items:center;
+}
+nav button[aria-current="true"]{color:var(--deep); border-bottom-color:var(--sun)}
+
+main{max-width:1000px; margin:0 auto; padding:14px 12px 60px}
+section{margin-bottom:22px}
+.hd{display:flex; align-items:baseline; gap:10px; margin:0 2px 8px}
+.hd h2{font-size:19px}
+.hd .note{font-size:12px; color:var(--muted); font-family:var(--mono)}
+
+/* ---------- Tagesband (Signatur) ---------- */
+.ribbon{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:12px; margin-bottom:16px}
+.ribbon .bars{display:flex; height:34px; border-radius:6px; overflow:hidden; position:relative; background:var(--soft)}
+.ribbon .seg{position:relative; display:flex; align-items:center; justify-content:center; min-width:0;
+  font-family:var(--cond); font-size:12px; font-weight:600; color:#fff; overflow:hidden}
+.ribbon .seg.a{background:var(--deep2)}
+.ribbon .seg.l{background:#B8C7D0; color:#2B3E48}
+.ribbon .seg.b{background:var(--deep)}
+.ribbon .seg.f{background:var(--sun); color:#3A2A00}
+.ribbon .now{position:absolute; top:-4px; bottom:-4px; width:2px; background:var(--ink)}
+.ribbon .now::after{content:''; position:absolute; top:-3px; left:-3px; width:8px; height:8px;
+  background:var(--ink); border-radius:99px}
+.ribbon .lbl{display:flex; justify-content:space-between; font-family:var(--mono); font-size:11px;
+  color:var(--muted); margin-top:6px}
+
+/* ---------- Spielkarten ---------- */
+.card{background:var(--card); border:1px solid var(--line); border-radius:var(--r); overflow:hidden}
+.match{
+  display:grid; grid-template-columns:52px 1fr auto; gap:10px; align-items:center;
+  padding:10px 12px; border-top:1px solid var(--line); background:var(--card); width:100%;
+  text-align:left; font:inherit; color:inherit; border-left:0; border-right:0; border-bottom:0;
+}
+.match:first-child{border-top:0}
+button.match{cursor:pointer}
+button.match:hover{background:var(--soft)}
+button.match:focus-visible{outline:3px solid var(--deep2); outline-offset:-3px}
+.match .when{font-family:var(--mono); font-size:13px; line-height:1.25}
+.match .when .ct{font-size:10px; color:var(--muted); letter-spacing:.04em}
+.match .who{min-width:0; font-family:var(--cond); font-size:16px; line-height:1.25}
+.match .who span{display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.match .who .vs{font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:.1em}
+.match .sc{font-family:var(--mono); font-size:19px; font-weight:600; text-align:right; white-space:nowrap}
+.match .sc.empty{color:var(--line); font-size:15px}
+.match .who b{font-weight:600}
+.match.live{background:#FFFBF0}
+.match.live .when{color:var(--sun-d); font-weight:600}
+.roundhead{
+  font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--muted); background:var(--soft); padding:6px 12px; border-top:1px solid var(--line);
+}
+.roundhead:first-child{border-top:0}
+
+.live-wrap{display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.livecard{background:var(--card); border:1px solid var(--line); border-left:5px solid var(--sun);
+  border-radius:var(--r); padding:12px 14px}
+.livecard .k{font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--sun-d)}
+.livecard .t{font-family:var(--cond); font-size:18px; font-weight:600; margin-top:4px}
+.livecard .m{font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:4px}
+
+/* ---------- Tabellen ---------- */
+.tw{overflow-x:auto; background:var(--card); border:1px solid var(--line); border-radius:var(--r)}
+table{border-collapse:collapse; width:100%; font-size:14px}
+th{background:var(--deep); color:#fff; font-family:var(--cond); font-weight:600; font-size:12px;
+  letter-spacing:.04em; text-transform:uppercase; padding:8px 8px; text-align:right; white-space:nowrap}
+th:nth-child(-n+2){text-align:left}
+td{padding:8px; border-top:1px solid var(--line); text-align:right; font-family:var(--mono);
+  font-variant-numeric:tabular-nums; white-space:nowrap}
+td:nth-child(2){text-align:left; font-family:var(--cond); font-size:15px; white-space:normal;
+  min-width:120px; font-weight:500}
+td:first-child{text-align:left; color:var(--muted)}
+tbody tr:nth-child(even){background:var(--soft)}
+tr.p1 td{background:#FFF4D1; font-weight:600}
+tr.p2 td{background:#EDF1F3}
+tr.p3 td{background:#FBEADF}
+
+/* ---------- Formular ---------- */
+.grid{display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.fld{background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:9px 11px}
+.fld label{display:block; font-size:12px; color:var(--muted); margin-bottom:3px}
+.fld input,.fld select{
+  width:100%; border:0; border-bottom:2px solid var(--line); background:transparent;
+  font-family:var(--mono); font-size:16px; color:var(--ink); padding:3px 0; min-height:30px;
+}
+.fld input:focus,.fld select:focus{outline:0; border-bottom-color:var(--sun)}
+.fld.name input{font-family:var(--cond); font-size:17px}
+.fld .code{font-family:var(--mono); font-size:11px; color:var(--deep2); letter-spacing:.06em}
+
+.btn{
+  all:unset; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
+  gap:6px; padding:11px 16px; min-height:44px; border-radius:8px; background:var(--deep); color:#fff;
+  font-family:var(--cond); font-weight:600; font-size:15px;
+}
+.btn:hover{background:var(--deep2)}
+.btn:focus-visible{outline:3px solid var(--sun); outline-offset:2px}
+.btn.ghost{background:transparent; color:var(--deep); border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--soft)}
+.btn.sun{background:var(--sun); color:#3A2A00}
+.btn.sm{padding:7px 11px; min-height:36px; font-size:14px}
+.row{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+
+.info{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--deep2);
+  border-radius:var(--r); padding:11px 13px; font-size:13.5px; color:#26424F}
+.info b{color:var(--ink)}
+.info + .info{margin-top:8px}
+.muted{color:var(--muted)}
+small{font-size:12px}
+
+/* ---------- Dialog ---------- */
+.back{position:fixed; inset:0; background:rgba(10,26,34,.55); display:flex; align-items:flex-end;
+  justify-content:center; z-index:60}
+@media(min-width:640px){.back{align-items:center}}
+.sheet{background:var(--card); width:100%; max-width:460px; border-radius:14px 14px 0 0;
+  padding:16px 16px calc(16px + env(safe-area-inset-bottom)); max-height:92vh; overflow:auto}
+@media(min-width:640px){.sheet{border-radius:14px}}
+.sheet h3{font-size:18px}
+.sheet .src{font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:.04em;
+  text-transform:uppercase; margin-bottom:10px}
+.setrow{display:grid; grid-template-columns:34px 1fr 1fr; gap:8px; align-items:center; margin-bottom:9px}
+.setrow .n{font-family:var(--mono); font-size:11px; color:var(--muted)}
+.stp{display:flex; align-items:center; border:1px solid var(--line); border-radius:8px; overflow:hidden}
+.stp button{all:unset; cursor:pointer; width:40px; min-height:46px; display:flex; align-items:center;
+  justify-content:center; font-size:22px; font-family:var(--mono); color:var(--deep); background:var(--soft)}
+.stp button:active{background:var(--line)}
+.stp input{width:100%; min-width:0; border:0; text-align:center; font-family:var(--mono);
+  font-size:20px; font-weight:600; min-height:46px; background:transparent; color:var(--ink)}
+.stp input:focus{outline:0; background:#FFFBF0}
+.names{display:grid; grid-template-columns:34px 1fr 1fr; gap:8px; margin-bottom:6px}
+.names div{font-family:var(--cond); font-weight:600; font-size:14px; overflow:hidden;
+  text-overflow:ellipsis; white-space:nowrap}
+.names div:first-child{visibility:hidden}
+
+/* ---------- QR ---------- */
+.qrbox{background:#fff; border:1px solid var(--line); border-radius:var(--r); padding:16px;
+  display:flex; flex-direction:column; align-items:center; gap:10px}
+.qrbox svg{width:100%; max-width:300px; height:auto; image-rendering:pixelated}
+.qrbox .cap{font-family:var(--mono); font-size:11px; color:var(--muted); text-align:center;
+  word-break:break-all}
+
+@media(max-width:520px){
+  .match{grid-template-columns:46px 1fr auto; gap:8px; padding:9px 10px}
+  .match .who{font-size:15px}
+  main{padding:12px 8px 60px}
+  .top h1{font-size:17px}
+}
+@media print{
+  .top,nav,.btn,.qrbox,.no-print{display:none!important}
+  body{background:#fff}
+  .card,.tw{border-color:#999; break-inside:avoid}
+}
+@media(prefers-reduced-motion:no-preference){
+  .match,.btn{transition:background .12s ease}
+}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><h1 id="ttl">Beachvolleyball-Turnier</h1><div class="sub" id="dte"></div></div>
+  <div class="chips"><span class="chip" id="modeChip"></span><span class="chip" id="syncChip"></span></div>
+</header>
+<nav id="nav"></nav>
+<main id="main"></main>
+<script>
+/* ---------------------------------------------------------------
+   Beachvolleyball-Turnier, 13 Teams
+   Eine Datei, keine externen Abhaengigkeiten ausser den Schriften.
+   Reihenfolge: QR-Tabellen, QR-Encoder, Turnierlogik, Oberflaeche.
+   --------------------------------------------------------------- */
+const RSB={L:[[1,26,19],[1,44,34],[1,70,55],[1,100,80],[1,134,108],[2,86,68],[2,98,78],[2,121,97],[2,146,116],[2,86,68,2,87,69],[4,101,81],[2,116,92,2,117,93],[4,133,107],[3,145,115,1,146,116],[5,109,87,1,110,88],[5,122,98,1,123,99],[1,135,107,5,136,108],[5,150,120,1,151,121],[3,141,113,4,142,114],[3,135,107,5,136,108],[4,144,116,4,145,117],[2,139,111,7,140,112],[4,151,121,5,152,122],[6,147,117,4,148,118],[8,132,106,4,133,107],[10,142,114,2,143,115],[8,152,122,4,153,123],[3,147,117,10,148,118],[7,146,116,7,147,117],[5,145,115,10,146,116],[13,145,115,3,146,116],[17,145,115],[17,145,115,1,146,116],[13,145,115,6,146,116],[12,151,121,7,152,122],[6,151,121,14,152,122],[17,152,122,4,153,123],[4,152,122,18,153,123],[20,147,117,4,148,118],[19,148,118,6,149,119]],M:[[1,26,16],[1,44,28],[1,70,44],[2,50,32],[2,67,43],[4,43,27],[4,49,31],[2,60,38,2,61,39],[3,58,36,2,59,37],[4,69,43,1,70,44],[1,80,50,4,81,51],[6,58,36,2,59,37],[8,59,37,1,60,38],[4,64,40,5,65,41],[5,65,41,5,66,42],[7,73,45,3,74,46],[10,74,46,1,75,47],[9,69,43,4,70,44],[3,70,44,11,71,45],[3,67,41,13,68,42],[17,68,42],[17,74,46],[4,75,47,14,76,48],[6,73,45,14,74,46],[8,75,47,13,76,48],[19,74,46,4,75,47],[22,73,45,3,74,46],[3,73,45,23,74,46],[21,73,45,7,74,46],[19,75,47,10,76,48],[2,74,46,29,75,47],[10,74,46,23,75,47],[14,74,46,21,75,47],[14,74,46,23,75,47],[12,75,47,26,76,48],[6,75,47,34,76,48],[29,74,46,14,75,47],[13,74,46,32,75,47],[40,75,47,7,76,48],[18,75,47,31,76,48]]};
+const ALIGN=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]];
+
+/* ---- QR-Encoder, Byte-Modus, EC-Stufen L und M, Versionen 1-40 ---- */
+
+const GEXP = new Uint8Array(512), GLOG = new Uint8Array(256);
+(function () {
+  let x = 1;
+  for (let i = 0; i < 255; i++) { GEXP[i] = x; GLOG[x] = i; x <<= 1; if (x & 0x100) x ^= 0x11d; }
+  for (let i = 255; i < 512; i++) GEXP[i] = GEXP[i - 255];
+})();
+function gmul(a, b) { return (a === 0 || b === 0) ? 0 : GEXP[GLOG[a] + GLOG[b]]; }
+
+function genPoly(n) {
+  let g = [1];
+  for (let i = 0; i < n; i++) {
+    const ng = new Array(g.length + 1).fill(0);
+    for (let j = 0; j < g.length; j++) {
+      ng[j] ^= gmul(g[j], 1);
+      ng[j + 1] ^= gmul(g[j], GEXP[i]);
+    }
+    g = ng;
+  }
+  return g;
+}
+
+function ecBytes(data, ecLen) {
+  const g = genPoly(ecLen);
+  const res = new Array(data.length + ecLen).fill(0);
+  for (let i = 0; i < data.length; i++) res[i] = data[i];
+  for (let i = 0; i < data.length; i++) {
+    const f = res[i];
+    if (f === 0) continue;
+    for (let j = 0; j < g.length; j++) res[i + j] ^= gmul(g[j], f);
+  }
+  return res.slice(data.length);
+}
+
+function utf8Bytes(str) {
+  const out = [];
+  for (const ch of str) {
+    let cp = ch.codePointAt(0);
+    if (cp < 0x80) out.push(cp);
+    else if (cp < 0x800) out.push(0xc0 | (cp >> 6), 0x80 | (cp & 63));
+    else if (cp < 0x10000) out.push(0xe0 | (cp >> 12), 0x80 | ((cp >> 6) & 63), 0x80 | (cp & 63));
+    else out.push(0xf0 | (cp >> 18), 0x80 | ((cp >> 12) & 63), 0x80 | ((cp >> 6) & 63), 0x80 | (cp & 63));
+  }
+  return out;
+}
+
+function blocksFor(version, level) {
+  const row = RSB[level][version - 1], blocks = [];
+  for (let i = 0; i < row.length; i += 3) {
+    for (let k = 0; k < row[i]; k++) blocks.push({ total: row[i + 1], data: row[i + 2] });
+  }
+  return blocks;
+}
+function dataCapacity(version, level) {
+  return blocksFor(version, level).reduce((s, b) => s + b.data, 0);
+}
+
+const MASKS = [
+  (i, j) => (i + j) % 2 === 0,
+  (i, j) => i % 2 === 0,
+  (i, j) => j % 3 === 0,
+  (i, j) => (i + j) % 3 === 0,
+  (i, j) => (Math.floor(i / 2) + Math.floor(j / 3)) % 2 === 0,
+  (i, j) => ((i * j) % 2) + ((i * j) % 3) === 0,
+  (i, j) => (((i * j) % 2) + ((i * j) % 3)) % 2 === 0,
+  (i, j) => (((i * j) % 3) + ((i + j) % 2)) % 2 === 0,
+];
+
+function bchFormat(v) {
+  let d = v << 10;
+  while (bitLen(d) - 11 >= 0) d ^= 0x537 << (bitLen(d) - 11);
+  return ((v << 10) | d) ^ 0x5412;
+}
+function bchVersion(v) {
+  let d = v << 12;
+  while (bitLen(d) - 13 >= 0) d ^= 0x1f25 << (bitLen(d) - 13);
+  return (v << 12) | d;
+}
+function bitLen(n) { let c = 0; while (n !== 0) { c++; n >>>= 1; } return c; }
+
+function buildMatrix(version, level, codewords, mask, test) {
+  const size = version * 4 + 17;
+  const m = [], reserved = [];
+  for (let i = 0; i < size; i++) { m.push(new Array(size).fill(0)); reserved.push(new Array(size).fill(0)); }
+
+  const finder = (r, c) => {
+    for (let dr = -1; dr <= 7; dr++) for (let dc = -1; dc <= 7; dc++) {
+      const rr = r + dr, cc = c + dc;
+      if (rr < 0 || rr >= size || cc < 0 || cc >= size) continue;
+      const on = (dr >= 0 && dr <= 6 && (dc === 0 || dc === 6)) ||
+        (dc >= 0 && dc <= 6 && (dr === 0 || dr === 6)) ||
+        (dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4);
+      m[rr][cc] = on ? 1 : 0; reserved[rr][cc] = 1;
+    }
+  };
+  finder(0, 0); finder(0, size - 7); finder(size - 7, 0);
+
+  for (let i = 8; i < size - 8; i++) {
+    const v = i % 2 === 0 ? 1 : 0;
+    m[6][i] = v; reserved[6][i] = 1;
+    m[i][6] = v; reserved[i][6] = 1;
+  }
+
+  const pos = ALIGN[version - 1];
+  for (const r of pos) for (const c of pos) {
+    if ((r <= 8 && c <= 8) || (r <= 8 && c >= size - 9) || (r >= size - 9 && c <= 8)) continue;
+    for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) {
+      m[r + dr][c + dc] = (Math.max(Math.abs(dr), Math.abs(dc)) !== 1) ? 1 : 0;
+      reserved[r + dr][c + dc] = 1;
+    }
+  }
+
+  for (let i = 0; i < 9; i++) { if (!reserved[8][i]) reserved[8][i] = 1; if (!reserved[i][8]) reserved[i][8] = 1; }
+  for (let i = 0; i < 8; i++) { reserved[8][size - 1 - i] = 1; reserved[size - 1 - i][8] = 1; }
+  m[size - 8][8] = test ? 0 : 1; reserved[size - 8][8] = 1;
+
+  if (version >= 7) {
+    const bits = bchVersion(version);
+    for (let i = 0; i < 18; i++) {
+      const b = test ? 0 : ((bits >> i) & 1), r = Math.floor(i / 3), c = i % 3;
+      m[size - 11 + c][r] = b; reserved[size - 11 + c][r] = 1;
+      m[r][size - 11 + c] = b; reserved[r][size - 11 + c] = 1;
+    }
+  }
+
+  let bitIdx = 0;
+  const totalBits = codewords.length * 8;
+  let up = true;
+  for (let col = size - 1; col > 0; col -= 2) {
+    if (col === 6) col--;
+    for (let n = 0; n < size; n++) {
+      const row = up ? size - 1 - n : n;
+      for (let k = 0; k < 2; k++) {
+        const c = col - k;
+        if (reserved[row][c]) continue;
+        let bit = 0;
+        if (bitIdx < totalBits) bit = (codewords[bitIdx >> 3] >> (7 - (bitIdx & 7))) & 1;
+        bitIdx++;
+        if (MASKS[mask](row, c)) bit ^= 1;
+        m[row][c] = bit;
+      }
+    }
+    up = !up;
+  }
+
+  const ecBits = level === 'L' ? 1 : 0;
+  const fmt = bchFormat((ecBits << 3) | mask);
+  for (let i = 0; i < 15; i++) {
+    const b = test ? 0 : ((fmt >> i) & 1);
+    if (i < 6) m[i][8] = b;
+    else if (i < 8) m[i + 1][8] = b;
+    else if (i === 8) m[8][7] = b;
+    else m[8][14 - i] = b;
+    if (i < 8) m[8][size - 1 - i] = b;
+    else m[size - 15 + i][8] = b;
+  }
+  m[size - 8][8] = test ? 0 : 1;
+  return m;
+}
+
+function penalty(m) {
+  const n = m.length; let p = 0;
+  for (let i = 0; i < n; i++) {
+    for (const dir of [0, 1]) {
+      let run = 1, prev = dir ? m[0][i] : m[i][0];
+      for (let j = 1; j < n; j++) {
+        const v = dir ? m[j][i] : m[i][j];
+        if (v === prev) run++;
+        else { if (run >= 5) p += 3 + (run - 5); run = 1; prev = v; }
+      }
+      if (run >= 5) p += 3 + (run - 5);
+    }
+  }
+  for (let i = 0; i < n - 1; i++) for (let j = 0; j < n - 1; j++) {
+    const s = m[i][j] + m[i][j + 1] + m[i + 1][j] + m[i + 1][j + 1];
+    if (s === 0 || s === 4) p += 3;
+  }
+  const pat1 = [1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0], pat2 = [0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1];
+  for (let i = 0; i < n; i++) for (let j = 0; j <= n - 11; j++) {
+    let a = true, b = true, c = true, d = true;
+    for (let k = 0; k < 11; k++) {
+      if (m[i][j + k] !== pat1[k]) a = false;
+      if (m[i][j + k] !== pat2[k]) b = false;
+      if (m[j + k][i] !== pat1[k]) c = false;
+      if (m[j + k][i] !== pat2[k]) d = false;
+    }
+    if (a) p += 40; if (b) p += 40; if (c) p += 40; if (d) p += 40;
+  }
+  let dark = 0;
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) dark += m[i][j];
+  p += Math.floor(Math.abs(dark * 100 / (n * n) - 50) / 5) * 10;
+  return p;
+}
+
+function qrMatrix(text, level) {
+  level = level || 'M';
+  const bytes = utf8Bytes(text);
+  let version = 0;
+  for (let v = 1; v <= 40; v++) {
+    const ccBits = v <= 9 ? 8 : 16;
+    if (4 + ccBits + bytes.length * 8 <= dataCapacity(v, level) * 8) { version = v; break; }
+  }
+  if (!version) throw new Error('Inhalt zu lang für einen QR-Code');
+
+  const ccBits = version <= 9 ? 8 : 16;
+  const bits = [];
+  const push = (val, len) => { for (let i = len - 1; i >= 0; i--) bits.push((val >> i) & 1); };
+  push(4, 4); push(bytes.length, ccBits);
+  for (const b of bytes) push(b, 8);
+
+  const cap = dataCapacity(version, level) * 8;
+  for (let i = 0; i < 4 && bits.length < cap; i++) bits.push(0);
+  while (bits.length % 8 !== 0) bits.push(0);
+  const data = [];
+  for (let i = 0; i < bits.length; i += 8) {
+    let b = 0; for (let k = 0; k < 8; k++) b = (b << 1) | bits[i + k];
+    data.push(b);
+  }
+  const padBytes = [0xec, 0x11];
+  let pi = 0;
+  while (data.length < cap / 8) data.push(padBytes[pi++ % 2]);
+
+  const blocks = blocksFor(version, level);
+  const dataBlocks = [], ecBlocks = [];
+  let off = 0;
+  for (const b of blocks) {
+    const d = data.slice(off, off + b.data); off += b.data;
+    dataBlocks.push(d);
+    ecBlocks.push(ecBytes(d, b.total - b.data));
+  }
+  const out = [];
+  const maxData = Math.max(...dataBlocks.map(b => b.length));
+  for (let i = 0; i < maxData; i++) for (const b of dataBlocks) if (i < b.length) out.push(b[i]);
+  const maxEc = Math.max(...ecBlocks.map(b => b.length));
+  for (let i = 0; i < maxEc; i++) for (const b of ecBlocks) if (i < b.length) out.push(b[i]);
+
+  let bestMask = 0, bestP = Infinity;
+  for (let mask = 0; mask < 8; mask++) {
+    const p = penalty(buildMatrix(version, level, out, mask, true));
+    if (p < bestP) { bestP = p; bestMask = mask; }
+  }
+  return buildMatrix(version, level, out, bestMask, false);
+}
+
+/* ================= Turnierlogik ================= */
+
+const DEFAULTS = {
+  title: 'Beachvolleyball-Turnier',
+  date: '',
+  base: '',
+  start: 9 * 60,      // Minuten ab Mitternacht
+  dGroup: 20, pGroup: 5, lunch: 45,
+  dSemi: 30, dFinal: 40, pFinal: 10,
+  courts: 3,
+  win: 2, draw: 1, loss: 0,
+  teamsA: ['Team A1', 'Team A2', 'Team A3', 'Team A4', 'Team A5', 'Team A6'],
+  teamsB: ['Team B1', 'Team B2', 'Team B3', 'Team B4', 'Team B5', 'Team B6', 'Team B7'],
+  // Resultate: null oder [a,b]
+  rA: Array(15).fill(null),
+  rB: Array(21).fill(null),
+  // Finalrunde: 3 Sätze je Spiel, jeder Satz null oder [a,b]
+  rF: [0, 1, 2, 3].map(() => [null, null, null]),
+};
+
+function roundRobin(n) {
+  const t = [];
+  for (let i = 0; i < n; i++) t.push(i);
+  if (n % 2) t.push(-1);
+  const m = t.length, rounds = [];
+  let arr = t.slice();
+  for (let r = 0; r < m - 1; r++) {
+    const pairs = [];
+    for (let i = 0; i < m / 2; i++) {
+      const a = arr[i], b = arr[m - 1 - i];
+      if (a >= 0 && b >= 0) pairs.push([a, b]);
+    }
+    rounds.push(pairs);
+    arr = [arr[0], arr[m - 1]].concat(arr.slice(1, m - 1));
+  }
+  return rounds;
+}
+
+const RR = { A: roundRobin(6), B: roundRobin(7) };
+
+function flatFixtures(key) {
+  const out = [];
+  RR[key].forEach((rd, ri) => rd.forEach((p, pi) => out.push({ round: ri, pos: pi, a: p[0], b: p[1] })));
+  return out;
+}
+const FIX = { A: flatFixtures('A'), B: flatFixtures('B') };
+
+function hhmm(min) {
+  min = Math.round(min);
+  const h = Math.floor(min / 60) % 24, m = min % 60;
+  return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+}
+function parseHHMM(s) {
+  const m = /^(\d{1,2}):(\d{2})$/.exec((s || '').trim());
+  if (!m) return null;
+  const h = +m[1], mi = +m[2];
+  if (h > 23 || mi > 59) return null;
+  return h * 60 + mi;
+}
+
+/* Zeitplan einer Gruppe: Spiele parallel auf `courts` Feldern, Runde für Runde */
+function groupSchedule(st, key, baseStart) {
+  const courts = Math.max(1, Math.min(6, st.courts | 0));
+  const slotsPerRound = Math.ceil(3 / courts);
+  return FIX[key].map((f, idx) => {
+    const slot = f.round * slotsPerRound + Math.floor(f.pos / courts);
+    const from = baseStart + slot * (st.dGroup + st.pGroup);
+    return {
+      idx, key, round: f.round, court: (f.pos % courts) + 1,
+      from, to: from + st.dGroup,
+      a: f.a, b: f.b,
+      nameA: (key === 'A' ? st.teamsA : st.teamsB)[f.a],
+      nameB: (key === 'A' ? st.teamsA : st.teamsB)[f.b],
+      res: (key === 'A' ? st.rA : st.rB)[idx],
+    };
+  });
+}
+
+function schedule(st) {
+  const A = groupSchedule(st, 'A', st.start);
+  const endA = Math.max(...A.map(m => m.to));
+  const B = groupSchedule(st, 'B', endA + st.lunch);
+  const endB = Math.max(...B.map(m => m.to));
+  const courts = Math.max(1, Math.min(6, st.courts | 0));
+
+  const hf1From = endB + st.pFinal;
+  const hf2From = hf1From + Math.floor(1 / courts) * (st.dSemi + st.pFinal);
+  const hfEnd = Math.max(hf1From + st.dSemi, hf2From + st.dSemi);
+  const kfFrom = hfEnd + st.pFinal;
+  const finFrom = kfFrom + st.dFinal + st.pFinal;
+
+  const F = [
+    { idx: 0, label: 'Halbfinal 1', short: 'HF 1', sets: 2, court: 1, from: hf1From, to: hf1From + st.dSemi },
+    { idx: 1, label: 'Halbfinal 2', short: 'HF 2', sets: 2, court: (1 % courts) + 1, from: hf2From, to: hf2From + st.dSemi },
+    { idx: 2, label: 'Kleiner Final · Platz 3/4', short: 'Platz 3/4', sets: 3, court: 1, from: kfFrom, to: kfFrom + st.dFinal },
+    { idx: 3, label: 'Final · Platz 1/2', short: 'Final', sets: 3, court: 1, from: finFrom, to: finFrom + st.dFinal },
+  ];
+  return { A, B, F, endA, endB, lunchFrom: endA, lunchTo: endA + st.lunch, end: F[3].to };
+}
+
+/* Tabelle einer Gruppe */
+function standings(st, key) {
+  const names = key === 'A' ? st.teamsA : st.teamsB;
+  const res = key === 'A' ? st.rA : st.rB;
+  const rows = names.map((name, i) => ({
+    i, name, sp: 0, w: 0, d: 0, l: 0, pts: 0, pf: 0, pa: 0, diff: 0,
+  }));
+  FIX[key].forEach((f, idx) => {
+    const r = res[idx];
+    if (!r || r[0] === null || r[1] === null) return;
+    const [x, y] = r, ra = rows[f.a], rb = rows[f.b];
+    ra.sp++; rb.sp++; ra.pf += x; ra.pa += y; rb.pf += y; rb.pa += x;
+    if (x > y) { ra.w++; rb.l++; } else if (y > x) { rb.w++; ra.l++; } else { ra.d++; rb.d++; }
+  });
+  rows.forEach(r => {
+    r.pts = r.w * st.win + r.d * st.draw + r.l * st.loss;
+    r.diff = r.pf - r.pa;
+  });
+  const sorted = rows.slice().sort((p, q) =>
+    q.pts - p.pts || q.diff - p.diff || q.pf - p.pf || p.i - q.i);
+  sorted.forEach((r, k) => { r.rank = k + 1; });
+  return sorted;
+}
+
+/* Auswertung eines Finalrunden-Spiels */
+function evalMatch(sets, nSets, nameA, nameB) {
+  let sa = 0, sb = 0, ta = 0, tb = 0, any = false;
+  for (let i = 0; i < nSets; i++) {
+    const s = sets[i];
+    if (!s || s[0] === null || s[1] === null) continue;
+    any = true; ta += s[0]; tb += s[1];
+    if (s[0] > s[1]) sa++; else if (s[1] > s[0]) sb++;
+  }
+  let winner = null, loser = null, tie = false;
+  if (any) {
+    if (sa > sb) { winner = nameA; loser = nameB; }
+    else if (sb > sa) { winner = nameB; loser = nameA; }
+    else if (ta > tb) { winner = nameA; loser = nameB; }
+    else if (tb > ta) { winner = nameB; loser = nameA; }
+    else tie = true;
+  }
+  return { sa, sb, ta, tb, winner, loser, tie, played: any };
+}
+
+/* Finalrunde inkl. Teilnehmer */
+function finalRound(st, sched) {
+  const tA = standings(st, 'A'), tB = standings(st, 'B');
+  const byRank = (t, r) => (t.find(x => x.rank === r) || {}).name || '—';
+  const out = sched.F.map(f => Object.assign({}, f));
+
+  out[0].nameA = byRank(tA, 1); out[0].srcA = '1. Gruppe A';
+  out[0].nameB = byRank(tB, 2); out[0].srcB = '2. Gruppe B';
+  out[1].nameA = byRank(tB, 1); out[1].srcA = '1. Gruppe B';
+  out[1].nameB = byRank(tA, 2); out[1].srcB = '2. Gruppe A';
+
+  out[0].sets = st.rF[0]; out[1].sets = st.rF[1];
+  out[0].ev = evalMatch(st.rF[0], 2, out[0].nameA, out[0].nameB);
+  out[1].ev = evalMatch(st.rF[1], 2, out[1].nameA, out[1].nameB);
+
+  out[2].nameA = out[0].ev.loser || 'Verlierer HF 1'; out[2].srcA = 'Verlierer HF 1';
+  out[2].nameB = out[1].ev.loser || 'Verlierer HF 2'; out[2].srcB = 'Verlierer HF 2';
+  out[3].nameA = out[0].ev.winner || 'Sieger HF 1'; out[3].srcA = 'Sieger HF 1';
+  out[3].nameB = out[1].ev.winner || 'Sieger HF 2'; out[3].srcB = 'Sieger HF 2';
+  out[2].sets = st.rF[2]; out[3].sets = st.rF[3];
+  out[2].ev = evalMatch(st.rF[2], 3, out[2].nameA, out[2].nameB);
+  out[3].ev = evalMatch(st.rF[3], 3, out[3].nameA, out[3].nameB);
+
+  out.forEach(m => { m.nSets = m.sets === undefined ? 2 : (m.idx < 2 ? 2 : 3); });
+  return { games: out, tA, tB };
+}
+
+/* Schlussrangliste 1-13 */
+function finalRanking(st, sched) {
+  const fr = finalRound(st, sched);
+  const { tA, tB } = fr, g = fr.games;
+  const list = [];
+  const add = (place, name, why) => list.push({ place, name: name || null, why });
+
+  add(1, g[3].ev.winner, 'Sieger Final');
+  add(2, g[3].ev.loser, 'Verlierer Final');
+  add(3, g[2].ev.winner, 'Sieger kleiner Final');
+  add(4, g[2].ev.loser, 'Verlierer kleiner Final');
+
+  const rest = [];
+  [[tA, 'A', 3, 6], [tB, 'B', 3, 7]].forEach(([tab, grp, lo, hi]) => {
+    for (let r = lo; r <= hi; r++) {
+      const row = tab.find(x => x.rank === r);
+      if (!row) continue;
+      const ppg = row.sp ? row.pts / row.sp : 0;
+      const dpg = row.sp ? row.diff / row.sp : 0;
+      rest.push({ grp, gRank: r, name: row.name, ppg, dpg, key: (100 - r) * 1e6 + ppg * 1e4 + dpg * 10 });
+    }
+  });
+  rest.sort((a, b) => b.key - a.key);
+  rest.forEach((x, k) => add(5 + k, x.name, `${x.gRank}. Gruppe ${x.grp} · ${x.ppg.toFixed(2)} Pkt/Spiel`));
+
+  const info = n => {
+    if (!n) return {};
+    let row = tA.find(x => x.name === n), grp = 'A';
+    if (!row) { row = tB.find(x => x.name === n); grp = 'B'; }
+    return row ? { grp, gRank: row.rank, pts: row.pts, diff: row.diff } : {};
+  };
+  list.forEach(e => Object.assign(e, info(e.name)));
+  return { list, games: g, tA, tB };
+}
+
+
+/* ================= Zustand & Speicher ================= */
+const KEY = 'bvt13:state';
+let st = JSON.parse(JSON.stringify(DEFAULTS));
+let RO = false;          // Nur-Lesen
+let SNAP = false;        // Snapshot aus dem Link, keine Synchronisation
+let view = 'jetzt';
+let openSheet = null;
+
+const Store = {
+  mode: 'memory', mem: null,
+  detect() {
+    try {
+      if (window.storage && typeof window.storage.get === 'function') { this.mode = 'shared'; return; }
+    } catch (e) { /* ignorieren */ }
+    try {
+      localStorage.setItem('__probe', '1'); localStorage.removeItem('__probe');
+      this.mode = 'local';
+    } catch (e) { this.mode = 'memory'; }
+  },
+  async get() {
+    if (this.mode === 'shared') {
+      try { const r = await window.storage.get(KEY, true); return r && r.value ? JSON.parse(r.value) : null; }
+      catch (e) { return null; }
+    }
+    if (this.mode === 'local') {
+      try { const v = localStorage.getItem(KEY); return v ? JSON.parse(v) : null; } catch (e) { return null; }
+    }
+    return this.mem;
+  },
+  async set(o) {
+    const s = JSON.stringify(o);
+    if (this.mode === 'shared') { try { await window.storage.set(KEY, s, true); return true; } catch (e) { return false; } }
+    if (this.mode === 'local') { try { localStorage.setItem(KEY, s); return true; } catch (e) { return false; } }
+    this.mem = o; return true;
+  }
+};
+
+function merge(raw) {
+  const s = JSON.parse(JSON.stringify(DEFAULTS));
+  if (!raw || typeof raw !== 'object') return s;
+  for (const k of Object.keys(DEFAULTS)) if (raw[k] !== undefined) s[k] = raw[k];
+  s.teamsA = (s.teamsA || []).slice(0, 6); while (s.teamsA.length < 6) s.teamsA.push('Team A' + (s.teamsA.length + 1));
+  s.teamsB = (s.teamsB || []).slice(0, 7); while (s.teamsB.length < 7) s.teamsB.push('Team B' + (s.teamsB.length + 1));
+  s.rA = (s.rA || []).slice(0, 15); while (s.rA.length < 15) s.rA.push(null);
+  s.rB = (s.rB || []).slice(0, 21); while (s.rB.length < 21) s.rB.push(null);
+  s.rF = (s.rF || []).slice(0, 4); while (s.rF.length < 4) s.rF.push([null, null, null]);
+  s.rF = s.rF.map(x => { const y = (x || []).slice(0, 3); while (y.length < 3) y.push(null); return y; });
+  s.ts = raw.ts || 0;
+  return s;
+}
+
+let saveTimer = null;
+function save(now) {
+  st.ts = Date.now();
+  if (SNAP) { render(); return; }
+  clearTimeout(saveTimer);
+  const go = () => Store.set(st).then(ok => { if (!ok) flash('Konnte nicht speichern'); });
+  if (now) go(); else saveTimer = setTimeout(go, 250);
+  render();
+}
+
+/* ================= Snapshot im Link ================= */
+function b64e(str) {
+  const b = new TextEncoder().encode(str);
+  let s = ''; for (let i = 0; i < b.length; i++) s += String.fromCharCode(b[i]);
+  return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+function b64d(str) {
+  const s = atob(str.replace(/-/g, '+').replace(/_/g, '/'));
+  const b = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) b[i] = s.charCodeAt(i);
+  return new TextDecoder().decode(b);
+}
+const p2 = v => (v === null || v === undefined || v === '') ? '--' : String(v).padStart(2, '0').slice(-2);
+const u2 = s => { if (s === '--' || s.trim() === '') return null; const v = parseInt(s, 10); return Number.isFinite(v) ? v : null; };
+
+function encodeState(s) {
+  const L = [
+    '1', s.title, s.date,
+    [s.start, s.dGroup, s.pGroup, s.lunch, s.dSemi, s.dFinal, s.pFinal, s.courts, s.win, s.draw, s.loss].join(';'),
+    s.teamsA.join('|'), s.teamsB.join('|'),
+    s.rA.map(r => r ? p2(r[0]) + p2(r[1]) : '----').join(''),
+    s.rB.map(r => r ? p2(r[0]) + p2(r[1]) : '----').join(''),
+    s.rF.map(m => m.map(x => x ? p2(x[0]) + p2(x[1]) : '----').join('')).join('|'),
+    String(s.ts || 0),
+  ];
+  return b64e(L.join('\n'));
+}
+function decodeState(code) {
+  const L = b64d(code).split('\n');
+  if (L[0] !== '1') throw new Error('Unbekanntes Snapshot-Format');
+  const n = L[3].split(';').map(Number);
+  const pull = (str, cnt) => {
+    const out = [];
+    for (let i = 0; i < cnt; i++) {
+      const c = str.substr(i * 4, 4);
+      const a = u2(c.substr(0, 2)), b = u2(c.substr(2, 2));
+      out.push((c === '----' || a === null || b === null) ? null : [a, b]);
+    }
+    return out;
+  };
+  return merge({
+    title: L[1], date: L[2],
+    start: n[0], dGroup: n[1], pGroup: n[2], lunch: n[3], dSemi: n[4], dFinal: n[5],
+    pFinal: n[6], courts: n[7], win: n[8], draw: n[9], loss: n[10],
+    teamsA: L[4].split('|'), teamsB: L[5].split('|'),
+    rA: pull(L[6], 15), rB: pull(L[7], 21),
+    rF: L[8].split('|').map(m => pull(m, 3)),
+    ts: Number(L[9] || 0),
+  });
+}
+
+/* ================= Hilfen ================= */
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c =>
+  ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const clean = v => String(v == null ? '' : v).replace(/[|\r\n]+/g, ' ').replace(/\s+/g, ' ').trim();
+const nowMin = () => { const d = new Date(); return d.getHours() * 60 + d.getMinutes(); };
+const $ = s => document.querySelector(s);
+
+function flash(msg) {
+  const el = document.createElement('div');
+  el.textContent = msg;
+  el.style.cssText = 'position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#0C1A22;' +
+    'color:#fff;padding:10px 16px;border-radius:8px;z-index:99;font-size:14px;max-width:90vw;text-align:center';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 2600);
+}
+
+/* ================= QR als SVG ================= */
+function qrSVG(text, level) {
+  let m;
+  try { m = qrMatrix(text, level || 'L'); }
+  catch (e) { return '<p class="muted">' + esc(e.message) + '</p>'; }
+  const n = m.length, q = 4, size = n + 2 * q;
+  let d = '';
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++)
+    if (m[y][x]) d += `M${x + q} ${y + q}h1v1h-1z`;
+  return `<svg viewBox="0 0 ${size} ${size}" shape-rendering="crispEdges" role="img" aria-label="QR-Code">` +
+    `<rect width="${size}" height="${size}" fill="#fff"/><path d="${d}" fill="#0C1A22"/></svg>`;
+}
+
+/* ================= Ansichten ================= */
+function ribbon(s) {
+  const segs = [
+    { c: 'a', t: 'Gruppe A', f: s.A[0].from, o: s.endA },
+    { c: 'l', t: 'Mittag', f: s.lunchFrom, o: s.lunchTo },
+    { c: 'b', t: 'Gruppe B', f: s.B[0].from, o: s.endB },
+    { c: 'f', t: 'Finalrunde', f: s.F[0].from, o: s.end },
+  ];
+  const t0 = segs[0].f, t1 = s.end, span = Math.max(1, t1 - t0);
+  const now = nowMin();
+  const marker = (now > t0 && now < t1) ? `<div class="now" style="left:${((now - t0) / span * 100).toFixed(2)}%"></div>` : '';
+  return `<div class="ribbon">
+    <div class="bars">${segs.map(g =>
+    `<div class="seg ${g.c}" style="width:${((g.o - g.f) / span * 100).toFixed(2)}%" title="${esc(g.t)} ${hhmm(g.f)}–${hhmm(g.o)}">${(g.o - g.f) / span > .12 ? esc(g.t) : ''}</div>`).join('')}${marker}</div>
+    <div class="lbl"><span>${hhmm(t0)}</span><span>${segs.map(g => hhmm(g.f)).slice(1).join(' · ')}</span><span>${hhmm(t1)}</span></div>
+  </div>`;
+}
+
+function matchRow(m, kind) {
+  const played = kind === 'g' ? !!m.res : m.ev.played;
+  let sc;
+  if (kind === 'g') {
+    sc = m.res ? `${m.res[0]}<span class="muted">:</span>${m.res[1]}` : '–&#8202;:&#8202;–';
+  } else {
+    sc = m.ev.played ? `${m.ev.sa}<span class="muted">:</span>${m.ev.sb}` : '–&#8202;:&#8202;–';
+  }
+  const live = nowMin() >= m.from && nowMin() < m.to;
+  let wa = '', wb = '';
+  if (kind === 'g' && m.res) { if (m.res[0] > m.res[1]) wa = 'b'; else if (m.res[1] > m.res[0]) wb = 'b'; }
+  if (kind === 'f' && m.ev.winner) { if (m.ev.winner === m.nameA) wa = 'b'; else wb = 'b'; }
+  const tag = RO ? 'div' : 'button';
+  const attr = RO ? '' : ` type="button" data-edit="${kind}${kind === 'g' ? m.key : ''}${m.idx}"`;
+  return `<${tag} class="match${live ? ' live' : ''}${played ? ' done' : ''}"${attr}>
+    <div class="when">${hhmm(m.from)}<div class="ct">Feld ${m.court}</div></div>
+    <div class="who">
+      <span>${wa ? '<b>' : ''}${esc(m.nameA)}${wa ? '</b>' : ''}</span>
+      <span class="vs">gegen</span>
+      <span>${wb ? '<b>' : ''}${esc(m.nameB)}${wb ? '</b>' : ''}</span>
+    </div>
+    <div class="sc mono${played ? '' : ' empty'}">${sc}</div>
+  </${tag}>`;
+}
+
+function viewJetzt(s, fr) {
+  const all = s.A.map(m => ({ m, k: 'g' })).concat(s.B.map(m => ({ m, k: 'g' })))
+    .concat(fr.games.map(m => ({ m, k: 'f' })));
+  const n = nowMin();
+  const live = all.filter(x => n >= x.m.from && n < x.m.to);
+  const next = all.filter(x => x.m.from > n).sort((a, b) => a.m.from - b.m.from).slice(0, 3);
+
+  let h = ribbon(s);
+  if (live.length) {
+    h += `<section><div class="hd"><h2>Läuft jetzt</h2><span class="note">${hhmm(n)}</span></div>
+      <div class="live-wrap">${live.map(x => `<div class="livecard">
+        <div class="k">Feld ${x.m.court} · bis ${hhmm(x.m.to)}</div>
+        <div class="t">${esc(x.m.nameA)}<br>${esc(x.m.nameB)}</div>
+        <div class="m">${x.k === 'f' ? esc(x.m.label) : 'Gruppe ' + x.m.key + ' · Runde ' + (x.m.round + 1)}</div>
+      </div>`).join('')}</div></section>`;
+  } else {
+    const done = n >= s.end, early = n < s.A[0].from;
+    h += `<section><div class="info"><b>${done ? 'Turnier beendet.' : early ? 'Turnier startet um ' + hhmm(s.A[0].from) + '.' : 'Gerade Pause.'}</b>
+      ${done ? 'Die Schlussrangliste steht im Reiter «Rangliste».' : next.length ? 'Nächster Anpfiff um ' + hhmm(next[0].m.from) + '.' : ''}</div></section>`;
+  }
+  if (next.length) {
+    h += `<section><div class="hd"><h2>Als Nächstes</h2></div>
+      <div class="card">${next.map(x => matchRow(x.m, x.k)).join('')}</div></section>`;
+  }
+  const top = fr.tA.slice(0, 3), topb = fr.tB.slice(0, 3);
+  h += `<section><div class="hd"><h2>Spitze der Gruppen</h2><span class="note">Zwischenstand</span></div>
+    <div class="grid">
+      ${[['A', top], ['B', topb]].map(([k, rows]) => `<div class="tw"><table>
+        <thead><tr><th>#</th><th>Gruppe ${k}</th><th>Sp</th><th>Pkt</th><th>+/−</th></tr></thead>
+        <tbody>${rows.map(r => `<tr><td>${r.rank}</td><td>${esc(r.name)}</td><td>${r.sp}</td><td>${r.pts}</td><td>${r.diff > 0 ? '+' : ''}${r.diff}</td></tr>`).join('')}</tbody>
+      </table></div>`).join('')}
+    </div></section>`;
+  return h;
+}
+
+function viewGroup(s, fr, key) {
+  const list = key === 'A' ? s.A : s.B;
+  const tab = key === 'A' ? fr.tA : fr.tB;
+  let rows = '', last = -1;
+  list.forEach(m => {
+    if (m.round !== last) { rows += `<div class="roundhead">Runde ${m.round + 1}</div>`; last = m.round; }
+    rows += matchRow(m, 'g');
+  });
+  const rest = key === 'A' ? 'Alle 6 Teams spielen in jeder Runde.' : 'Pro Runde pausiert ein Team.';
+  return `<section><div class="hd"><h2>Gruppe ${key}</h2>
+      <span class="note">${list.length} Spiele · 1 Satz · ${rest}</span></div>
+    <div class="card">${rows}</div>
+    ${RO ? '' : '<p class="muted"><small>Spiel antippen, um das Resultat zu erfassen.</small></p>'}</section>
+  <section><div class="hd"><h2>Tabelle ${key}</h2>
+      <span class="note">Punkte · Differenz · erzielte Punkte</span></div>
+    <div class="tw"><table>
+      <thead><tr><th>#</th><th>Team</th><th>Sp</th><th>S</th><th>U</th><th>N</th><th>Pkt</th><th>+</th><th>−</th><th>+/−</th></tr></thead>
+      <tbody>${tab.map(r => `<tr><td>${r.rank}</td><td>${esc(r.name)}</td><td>${r.sp}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td><b>${r.pts}</b></td><td>${r.pf}</td><td>${r.pa}</td><td>${r.diff > 0 ? '+' : ''}${r.diff}</td></tr>`).join('')}</tbody>
+    </table></div></section>`;
+}
+
+function viewFinal(s, fr) {
+  return `<section><div class="hd"><h2>Finalrunde</h2>
+      <span class="note">Halbfinals 2 Sätze · Finalspiele 3 Sätze</span></div>
+    <div class="card">${fr.games.map(g => matchRow(g, 'f')).join('')}</div></section>
+  <section><div class="card">
+    ${fr.games.map(g => `<div class="match" style="grid-template-columns:1fr">
+      <div><div class="when" style="font-size:11px;letter-spacing:.06em;text-transform:uppercase">${esc(g.label)} · ${hhmm(g.from)}–${hhmm(g.to)} · Feld ${g.court}</div>
+      <div class="who" style="font-size:17px;margin-top:4px">${esc(g.nameA)} <span class="vs" style="display:inline">gegen</span> ${esc(g.nameB)}</div>
+      <div class="mono muted" style="font-size:12px;margin-top:4px">${esc(g.srcA)} · ${esc(g.srcB)}${g.ev.played ? ' — Sätze ' + g.ev.sa + ':' + g.ev.sb + ' (' + g.ev.ta + ':' + g.ev.tb + ' Punkte)' : ''}</div>
+      ${g.ev.tie ? '<div class="mono" style="color:var(--warn);font-size:12px">Gleichstand – Entscheidung offen</div>' : ''}
+      ${g.ev.winner ? '<div class="mono" style="color:var(--ok);font-size:12px;margin-top:2px">Sieger: ' + esc(g.ev.winner) + '</div>' : ''}
+      </div></div>`).join('')}
+  </div></section>
+  <div class="info">Bei 1:1 Sätzen in einem Halbfinal entscheidet die Gesamtpunktzahl beider Sätze. Der dritte Satz in den Finalspielen wird nur bei 1:1 gespielt.</div>`;
+}
+
+function viewRang(s, fr) {
+  const r = finalRanking(st, s);
+  return `<section><div class="hd"><h2>Schlussrangliste</h2>
+      <span class="note">Plätze 1–4 aus der Finalrunde</span></div>
+    <div class="tw"><table>
+      <thead><tr><th>#</th><th>Team</th><th>Gr.</th><th>Pkt</th><th>+/−</th><th style="text-align:left">Entschieden durch</th></tr></thead>
+      <tbody>${r.list.map(e => `<tr class="${e.place <= 3 ? 'p' + e.place : ''}">
+        <td>${e.place}</td><td>${e.name ? esc(e.name) : '<span class="muted">offen</span>'}</td>
+        <td>${e.grp || '—'}</td><td>${e.pts === undefined ? '—' : e.pts}</td>
+        <td>${e.diff === undefined ? '—' : (e.diff > 0 ? '+' : '') + e.diff}</td>
+        <td style="text-align:left;font-family:var(--sans);font-size:12.5px;white-space:normal" class="muted">${esc(e.why)}</td></tr>`).join('')}</tbody>
+    </table></div></section>
+  <div class="info">Die Plätze 5–13 werden ohne weitere Spiele aus der Gruppenphase abgeleitet: zuerst der Rang in der Gruppe, dann <b>Punkte pro Spiel</b>, dann Punktedifferenz pro Spiel. Der Bezug auf einzelne Spiele ist nötig, weil Gruppe A fünf und Gruppe B sechs Partien austrägt.</div>`;
+}
+
+function fld(label, id, val, type, extra) {
+  return `<div class="fld"><label for="${id}">${esc(label)}</label>
+    <input id="${id}" type="${type || 'number'}" value="${esc(val)}" ${extra || ''}></div>`;
+}
+
+function viewSetup() {
+  return `<section><div class="hd"><h2>Turnier</h2></div><div class="grid">
+      ${fld('Titel', 's_title', st.title, 'text')}
+      ${fld('Datum / Ort', 's_date', st.date, 'text', 'placeholder="z. B. 15. August, Aarau"')}
+    </div></section>
+  <section><div class="hd"><h2>Zeiten</h2><span class="note">Minuten, ausser Startzeit</span></div><div class="grid">
+      ${fld('Startzeit am Morgen', 's_start', hhmm(st.start), 'text', 'inputmode="numeric" placeholder="09:00"')}
+      ${fld('Spieldauer Gruppenspiel', 's_dGroup', st.dGroup, 'number', 'min="1" inputmode="numeric"')}
+      ${fld('Pause zwischen Gruppenspielen', 's_pGroup', st.pGroup, 'number', 'min="0" inputmode="numeric"')}
+      ${fld('Mittagspause', 's_lunch', st.lunch, 'number', 'min="0" inputmode="numeric"')}
+      ${fld('Dauer Halbfinal (2 Sätze)', 's_dSemi', st.dSemi, 'number', 'min="1" inputmode="numeric"')}
+      ${fld('Dauer Finalspiel (3 Sätze)', 's_dFinal', st.dFinal, 'number', 'min="1" inputmode="numeric"')}
+      ${fld('Pause in der Finalrunde', 's_pFinal', st.pFinal, 'number', 'min="0" inputmode="numeric"')}
+      <div class="fld"><label for="s_courts">Anzahl Spielfelder</label>
+        <select id="s_courts">${[1, 2, 3].map(c => `<option value="${c}"${st.courts === c ? ' selected' : ''}>${c} Feld${c > 1 ? 'er' : ''}</option>`).join('')}</select></div>
+    </div></section>
+  <section><div class="hd"><h2>Punkte</h2><span class="note">Gruppenphase</span></div><div class="grid">
+      ${fld('Punkte pro Sieg', 's_win', st.win, 'number', 'inputmode="numeric"')}
+      ${fld('Punkte pro Unentschieden', 's_draw', st.draw, 'number', 'inputmode="numeric"')}
+      ${fld('Punkte pro Niederlage', 's_loss', st.loss, 'number', 'inputmode="numeric"')}
+    </div></section>
+  <section><div class="hd"><h2>Teams Gruppe A</h2><span class="note">6 Teams</span></div><div class="grid">
+      ${st.teamsA.map((t, i) => `<div class="fld name"><label for="ta${i}"><span class="code">A${i + 1}</span></label>
+        <input id="ta${i}" data-team="A${i}" type="text" value="${esc(t)}"></div>`).join('')}
+    </div></section>
+  <section><div class="hd"><h2>Teams Gruppe B</h2><span class="note">7 Teams</span></div><div class="grid">
+      ${st.teamsB.map((t, i) => `<div class="fld name"><label for="tb${i}"><span class="code">B${i + 1}</span></label>
+        <input id="tb${i}" data-team="B${i}" type="text" value="${esc(t)}"></div>`).join('')}
+    </div></section>
+  <section><div class="hd"><h2>Daten</h2></div>
+    <div class="row">
+      <button class="btn ghost sm" id="btnExport">Sicherung herunterladen</button>
+      <button class="btn ghost sm" id="btnImport">Sicherung einlesen</button>
+      <button class="btn ghost sm" id="btnClearRes">Alle Resultate löschen</button>
+      <input type="file" id="fileImp" accept="application/json" hidden>
+    </div></section>`;
+}
+
+function viewTeilen(s) {
+  const base = (st.base || '').trim() || location.href.split('#')[0];
+  const snapUrl = base + '#d=' + encodeState(st);
+  const liveUrl = base + '#v';
+  const modeTxt = {
+    shared: 'Diese Seite liegt in einem geteilten Speicher. Alle, die den Link öffnen, sehen laufend denselben Stand.',
+    local: 'Die Daten liegen nur in diesem Browser. Andere Geräte sehen sie nur über einen Snapshot-Link.',
+    memory: 'Der Browser lässt keine Speicherung zu. Die Daten gehen beim Neuladen verloren – lade regelmässig eine Sicherung herunter.'
+  }[Store.mode];
+  const tooLong = snapUrl.length > 1200;
+
+  return `<section><div class="hd"><h2>Lesezugang für die Teams</h2></div>
+    <div class="info"><b>So funktioniert es:</b> ${esc(modeTxt)}</div>
+
+    <div class="fld" style="margin:12px 0">
+      <label for="s_base">Öffentliche Adresse dieser Seite</label>
+      <input id="s_base" type="url" value="${esc(base)}" placeholder="https://…" style="font-size:13px">
+    </div>
+    <p class="muted"><small>Die Adresse muss von den Handys der Teams erreichbar sein. Eine lokal geöffnete Datei (file://…) funktioniert nicht – lade die Datei vorher irgendwo hoch.</small></p>
+  </section>
+
+  <section><div class="hd"><h2>Snapshot-QR</h2><span class="note">funktioniert immer</span></div>
+    <div class="qrbox">${tooLong ? '<p class="muted">Der Stand ist für einen QR-Code zu lang. Kürze die Teamnamen oder nutze den Live-Link.</p>' : qrSVG(snapUrl, 'L')}
+      <div class="cap">${esc(snapUrl.slice(0, 90))}${snapUrl.length > 90 ? '…' : ''}<br>${snapUrl.length} Zeichen</div>
+      <div class="row"><button class="btn sm ghost" data-copy="${esc(snapUrl)}">Link kopieren</button></div>
+    </div>
+    <p class="muted" style="margin-top:8px"><small>Der QR-Code enthält den kompletten aktuellen Stand. Er ändert sich mit jedem erfassten Resultat – für aktuelle Zahlen scannen die Teams neu. Ideal auf einem Bildschirm am Schreibtisch der Turnierleitung.</small></p>
+  </section>
+
+  <section><div class="hd"><h2>Live-Link</h2><span class="note">${Store.mode === 'shared' ? 'aktiv' : 'nur mit geteiltem Speicher'}</span></div>
+    <div class="qrbox">${qrSVG(liveUrl, 'M')}
+      <div class="cap">${esc(liveUrl)}</div>
+      <div class="row"><button class="btn sm ghost" data-copy="${esc(liveUrl)}">Link kopieren</button></div>
+    </div>
+    <p class="muted" style="margin-top:8px"><small>${Store.mode === 'shared'
+      ? 'Dieser Link zeigt immer den aktuellen Stand, ohne erneutes Scannen. Einmal ausdrucken und aufhängen genügt.'
+      : 'Dieser Link öffnet die Seite im Lesemodus, zeigt aber nur, was auf dem jeweiligen Gerät gespeichert ist. Für echte Live-Anzeige braucht es einen geteilten Speicher – siehe Hinweis unten.'}</small></p>
+  </section>
+
+  <div class="info"><b>Nicht als Zugriffsschutz gedacht.</b> Der Lesemodus verhindert versehentliches Ändern, nicht absichtliches. Wer den Link hat, kann in der Adresszeile auf den Bearbeitungsmodus wechseln. Für ein Beachturnier reicht das; für alles Heiklere nicht.</div>`;
+}
+
+/* ================= Dialog zur Resultaterfassung ================= */
+function sheetFor(kind, key, idx) {
+  const s = schedule(st), fr = finalRound(st, s);
+  let title, srcTxt, nameA, nameB, sets, nSets;
+  if (kind === 'g') {
+    const m = (key === 'A' ? s.A : s.B)[idx];
+    title = `Gruppe ${key} · Runde ${m.round + 1}`;
+    srcTxt = `${hhmm(m.from)}–${hhmm(m.to)} · Feld ${m.court}`;
+    nameA = m.nameA; nameB = m.nameB; nSets = 1;
+    sets = [m.res ? m.res.slice() : [null, null]];
+  } else {
+    const g = fr.games[idx];
+    title = g.label;
+    srcTxt = `${hhmm(g.from)}–${hhmm(g.to)} · Feld ${g.court} · ${g.srcA} / ${g.srcB}`;
+    nameA = g.nameA; nameB = g.nameB; nSets = g.idx < 2 ? 2 : 3;
+    sets = st.rF[idx].slice(0, nSets).map(x => x ? x.slice() : [null, null]);
+  }
+  openSheet = { kind, key, idx, sets, nSets };
+
+  const stepper = (si, side, val) => `<div class="stp">
+      <button type="button" data-step="${si},${side},-1" aria-label="weniger">−</button>
+      <input type="text" inputmode="numeric" pattern="[0-9]*" data-in="${si},${side}" value="${val === null ? '' : val}" aria-label="Punkte">
+      <button type="button" data-step="${si},${side},1" aria-label="mehr">+</button>
+    </div>`;
+
+  const body = `<div class="back" id="back"><div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(title)}">
+    <h3>${esc(title)}</h3><div class="src">${esc(srcTxt)}</div>
+    <div class="names"><div>·</div><div>${esc(nameA)}</div><div>${esc(nameB)}</div></div>
+    ${sets.map((sv, i) => `<div class="setrow"><div class="n">${nSets === 1 ? 'Satz' : 'S' + (i + 1)}</div>
+        ${stepper(i, 0, sv[0])}${stepper(i, 1, sv[1])}</div>`).join('')}
+    ${nSets === 3 ? '<p class="muted"><small>Satz 3 nur bei Satzgleichstand 1:1 ausfüllen.</small></p>' : ''}
+    ${nSets === 2 ? '<p class="muted"><small>Bei 1:1 Sätzen entscheidet die Gesamtpunktzahl.</small></p>' : ''}
+    <div class="row" style="margin-top:14px">
+      <button class="btn" id="okBtn">Speichern</button>
+      <button class="btn ghost" id="cancelBtn">Abbrechen</button>
+      <button class="btn ghost" id="clrBtn" style="margin-left:auto">Leeren</button>
+    </div>
+  </div></div>`;
+  const host = document.createElement('div');
+  host.innerHTML = body;
+  document.body.appendChild(host.firstElementChild);
+  const el = $('#back');
+  el.querySelector('input').focus();
+
+  el.addEventListener('click', e => { if (e.target === el) closeSheet(); });
+  el.querySelectorAll('[data-step]').forEach(b => b.addEventListener('click', () => {
+    const [si, side, d] = b.dataset.step.split(',').map(Number);
+    const inp = el.querySelector(`[data-in="${si},${side}"]`);
+    const cur = inp.value === '' ? 0 : parseInt(inp.value, 10) || 0;
+    inp.value = Math.max(0, Math.min(99, cur + d));
+  }));
+  $('#cancelBtn').onclick = closeSheet;
+  $('#clrBtn').onclick = () => { el.querySelectorAll('[data-in]').forEach(i => i.value = ''); };
+  $('#okBtn').onclick = () => {
+    const vals = [];
+    for (let i = 0; i < nSets; i++) {
+      const a = el.querySelector(`[data-in="${i},0"]`).value.trim();
+      const b = el.querySelector(`[data-in="${i},1"]`).value.trim();
+      vals.push((a === '' || b === '') ? null : [Math.max(0, parseInt(a, 10) || 0), Math.max(0, parseInt(b, 10) || 0)]);
+    }
+    if (kind === 'g') {
+      (key === 'A' ? st.rA : st.rB)[idx] = vals[0];
+    } else {
+      const cur = st.rF[idx];
+      for (let i = 0; i < nSets; i++) cur[i] = vals[i];
+      if (nSets === 2) cur[2] = null;
+    }
+    closeSheet(); save(true);
+  };
+  document.addEventListener('keydown', escClose);
+}
+function escClose(e) { if (e.key === 'Escape') closeSheet(); }
+function closeSheet() {
+  const el = $('#back'); if (el) el.remove();
+  openSheet = null;
+  document.removeEventListener('keydown', escClose);
+}
+
+/* ================= Rendern ================= */
+const TABS = [
+  ['jetzt', 'Jetzt'], ['A', 'Gruppe A'], ['B', 'Gruppe B'],
+  ['final', 'Finalrunde'], ['rang', 'Rangliste'],
+  ['setup', 'Einstellungen'], ['teilen', 'Teilen'],
+];
+
+function busy() {
+  if (openSheet) return true;
+  const a = document.activeElement;
+  return !!(a && /^(INPUT|SELECT|TEXTAREA)$/.test(a.tagName));
+}
+
+function render() {
+  const focusId = (document.activeElement || {}).id;
+  const s = schedule(st), fr = finalRound(st, s);
+  $('#ttl').textContent = st.title || 'Beachvolleyball-Turnier';
+  $('#dte').textContent = st.date || '';
+  const syncTxt = SNAP ? 'Snapshot' : { shared: 'Live geteilt', local: 'Dieses Gerät', memory: 'Nur Sitzung' }[Store.mode];
+  $('#syncChip').textContent = syncTxt;
+  $('#syncChip').className = 'chip' + (Store.mode === 'memory' && !SNAP ? ' warn' : '');
+  $('#modeChip').innerHTML = RO
+    ? '<button type="button" id="toEdit" title="Auf Bearbeiten umschalten">Nur lesen ⇄</button>'
+    : '<button type="button" id="toRead" title="Auf Nur lesen umschalten">Bearbeiten ⇄</button>';
+  $('#modeChip').className = 'chip' + (RO ? '' : ' edit');
+
+  const tabs = TABS.filter(t => !RO || (t[0] !== 'setup' && t[0] !== 'teilen'));
+  if (!tabs.some(t => t[0] === view)) view = 'jetzt';
+  $('#nav').innerHTML = tabs.map(([k, l]) =>
+    `<button type="button" data-tab="${k}" aria-current="${view === k}">${l}</button>`).join('');
+
+  let html;
+  if (view === 'jetzt') html = viewJetzt(s, fr);
+  else if (view === 'A' || view === 'B') html = viewGroup(s, fr, view);
+  else if (view === 'final') html = viewFinal(s, fr);
+  else if (view === 'rang') html = viewRang(s, fr);
+  else if (view === 'setup') html = viewSetup();
+  else html = viewTeilen(s);
+  $('#main').innerHTML = html;
+
+  $('#nav').querySelectorAll('[data-tab]').forEach(b =>
+    b.onclick = () => { view = b.dataset.tab; render(); window.scrollTo(0, 0); });
+  const te = $('#toEdit'), tr = $('#toRead');
+  if (te) te.onclick = () => { RO = false; render(); };
+  if (tr) tr.onclick = () => { RO = true; render(); };
+
+  $('#main').querySelectorAll('[data-edit]').forEach(b => b.onclick = () => {
+    const v = b.dataset.edit;
+    if (v[0] === 'g') sheetFor('g', v[1], parseInt(v.slice(2), 10));
+    else sheetFor('f', null, parseInt(v.slice(1), 10));
+  });
+  $('#main').querySelectorAll('[data-copy]').forEach(b => b.onclick = async () => {
+    try { await navigator.clipboard.writeText(b.dataset.copy); flash('Link kopiert'); }
+    catch (e) { flash('Kopieren nicht möglich – Link manuell markieren'); }
+  });
+  if (view === 'setup') wireSetup();
+  if (view === 'teilen') {
+    const bi = $('#s_base');
+    if (bi) bi.onchange = () => { st.base = clean(bi.value); save(); };
+  }
+  syncNavTop();
+  if (focusId) { const el = document.getElementById(focusId); if (el) el.focus(); }
+}
+
+function syncNavTop() {
+  const t = $('.top');
+  if (t) document.documentElement.style.setProperty('--navtop', t.offsetHeight + 'px');
+}
+
+function wireSetup() {
+  const num = (id, k, min) => {
+    const el = document.getElementById(id); if (!el) return;
+    el.onchange = () => {
+      let v = parseInt(el.value, 10);
+      if (isNaN(v)) v = DEFAULTS[k];
+      if (min !== undefined) v = Math.max(min, v);
+      st[k] = v; save();
+    };
+  };
+  const txt = (id, k) => {
+    const el = document.getElementById(id); if (!el) return;
+    el.onchange = () => { st[k] = clean(el.value); el.value = st[k]; save(); };
+  };
+  txt('s_title', 'title'); txt('s_date', 'date');
+  const sEl = $('#s_start');
+  if (sEl) sEl.onchange = () => {
+    const v = parseHHMM(sEl.value);
+    if (v === null) { flash('Startzeit bitte als hh:mm, z. B. 09:00'); sEl.value = hhmm(st.start); return; }
+    st.start = v; save();
+  };
+  num('s_dGroup', 'dGroup', 1); num('s_pGroup', 'pGroup', 0); num('s_lunch', 'lunch', 0);
+  num('s_dSemi', 'dSemi', 1); num('s_dFinal', 'dFinal', 1); num('s_pFinal', 'pFinal', 0);
+  num('s_win', 'win'); num('s_draw', 'draw'); num('s_loss', 'loss');
+  const c = $('#s_courts');
+  if (c) c.onchange = () => { st.courts = parseInt(c.value, 10); save(); };
+  document.querySelectorAll('[data-team]').forEach(inp => inp.onchange = () => {
+    const g = inp.dataset.team[0], i = parseInt(inp.dataset.team.slice(1), 10);
+    const v = clean(inp.value) || (g === 'A' ? 'Team A' + (i + 1) : 'Team B' + (i + 1));
+    inp.value = v;
+    (g === 'A' ? st.teamsA : st.teamsB)[i] = v; save();
+  });
+  const ex = $('#btnExport');
+  if (ex) ex.onclick = () => {
+    const blob = new Blob([JSON.stringify(st, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'turnier-sicherung.json'; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  };
+  const im = $('#btnImport'), fi = $('#fileImp');
+  if (im) im.onclick = () => fi.click();
+  if (fi) fi.onchange = () => {
+    const f = fi.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try { st = merge(JSON.parse(r.result)); save(true); flash('Sicherung eingelesen'); }
+      catch (e) { flash('Datei konnte nicht gelesen werden'); }
+    };
+    r.readAsText(f);
+  };
+  const cl = $('#btnClearRes');
+  if (cl) cl.onclick = () => {
+    if (!confirm('Wirklich alle erfassten Resultate löschen? Teams und Einstellungen bleiben.')) return;
+    st.rA = Array(15).fill(null); st.rB = Array(21).fill(null);
+    st.rF = [0, 1, 2, 3].map(() => [null, null, null]);
+    save(true); flash('Resultate gelöscht');
+  };
+}
+
+/* ================= Start ================= */
+async function boot() {
+  const hash = location.hash || '';
+  if (hash.startsWith('#d=')) {
+    try { st = decodeState(hash.slice(3)); SNAP = true; RO = true; }
+    catch (e) { flash('Snapshot-Link konnte nicht gelesen werden'); }
+  }
+  if (!SNAP) {
+    Store.detect();
+    const raw = await Store.get();
+    if (raw) st = merge(raw);
+    if (hash === '#v') RO = true;
+  }
+  render();
+  window.addEventListener('resize', syncNavTop);
+  setInterval(() => { if (!busy()) render(); }, 30000);
+  // Zweites Fenster desselben Browsers nachziehen (z. B. QR-Anzeige auf dem Zweitschirm)
+  if (!SNAP && Store.mode === 'local') {
+    window.addEventListener('storage', e => {
+      if (e.key !== KEY || busy()) return;
+      try {
+        const raw = JSON.parse(e.newValue || 'null');
+        if (raw && (raw.ts || 0) > (st.ts || 0)) { st = merge(raw); render(); }
+      } catch (err) { /* unlesbar, ignorieren */ }
+    });
+  }   // Uhrzeit / «läuft jetzt»
+  if (!SNAP && Store.mode === 'shared') {
+    setInterval(async () => {
+      if (busy()) return;
+      const raw = await Store.get();
+      if (raw && (raw.ts || 0) > (st.ts || 0)) { st = merge(raw); render(); }
+    }, 6000);
+  }
+}
+document.addEventListener('DOMContentLoaded', boot);
+
+</script>
+</body>
+</html>
