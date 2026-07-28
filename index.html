@@ -247,6 +247,15 @@ small{font-size:12px}
   text-overflow:ellipsis; white-space:nowrap}
 .names div:first-child{visibility:hidden}
 
+.pwrow input{width:100%; border:1px solid var(--line); border-radius:var(--r-s);
+  padding:11px 12px; min-height:48px; font-family:var(--mono); font-size:17px; color:var(--ink);
+  background:var(--paper)}
+.pwrow input:focus{outline:0; border-color:var(--green); box-shadow:0 0 0 3px var(--green-pale)}
+.check{display:flex; align-items:center; gap:8px; margin-top:11px; font-size:13.5px;
+  color:var(--ink-2); cursor:pointer}
+.check input{width:20px; height:20px; accent-color:var(--green)}
+.pwmsg{color:#A32100; font-size:13px; margin:9px 0 0; min-height:1px; font-weight:500}
+
 /* ---------- QR ---------- */
 .qrbox{background:var(--paper); border:1px solid var(--line); border-radius:var(--r); padding:17px;
   display:flex; flex-direction:column; align-items:center; gap:11px; box-shadow:var(--sh)}
@@ -293,7 +302,7 @@ small{font-size:12px}
 /* ---------------------------------------------------------------
    Beachvolleyball-Turnier, 13 Teams
    Eine Datei, keine externen Abhaengigkeiten ausser den Schriften.
-   Reihenfolge: QR-Tabellen, QR-Encoder, Turnierlogik, Oberflaeche.
+   Reihenfolge: QR-Tabellen, QR-Encoder, SHA-256, Turnierlogik, Oberflaeche.
    --------------------------------------------------------------- */
 const RSB={L:[[1,26,19],[1,44,34],[1,70,55],[1,100,80],[1,134,108],[2,86,68],[2,98,78],[2,121,97],[2,146,116],[2,86,68,2,87,69],[4,101,81],[2,116,92,2,117,93],[4,133,107],[3,145,115,1,146,116],[5,109,87,1,110,88],[5,122,98,1,123,99],[1,135,107,5,136,108],[5,150,120,1,151,121],[3,141,113,4,142,114],[3,135,107,5,136,108],[4,144,116,4,145,117],[2,139,111,7,140,112],[4,151,121,5,152,122],[6,147,117,4,148,118],[8,132,106,4,133,107],[10,142,114,2,143,115],[8,152,122,4,153,123],[3,147,117,10,148,118],[7,146,116,7,147,117],[5,145,115,10,146,116],[13,145,115,3,146,116],[17,145,115],[17,145,115,1,146,116],[13,145,115,6,146,116],[12,151,121,7,152,122],[6,151,121,14,152,122],[17,152,122,4,153,123],[4,152,122,18,153,123],[20,147,117,4,148,118],[19,148,118,6,149,119]],M:[[1,26,16],[1,44,28],[1,70,44],[2,50,32],[2,67,43],[4,43,27],[4,49,31],[2,60,38,2,61,39],[3,58,36,2,59,37],[4,69,43,1,70,44],[1,80,50,4,81,51],[6,58,36,2,59,37],[8,59,37,1,60,38],[4,64,40,5,65,41],[5,65,41,5,66,42],[7,73,45,3,74,46],[10,74,46,1,75,47],[9,69,43,4,70,44],[3,70,44,11,71,45],[3,67,41,13,68,42],[17,68,42],[17,74,46],[4,75,47,14,76,48],[6,73,45,14,74,46],[8,75,47,13,76,48],[19,74,46,4,75,47],[22,73,45,3,74,46],[3,73,45,23,74,46],[21,73,45,7,74,46],[19,75,47,10,76,48],[2,74,46,29,75,47],[10,74,46,23,75,47],[14,74,46,21,75,47],[14,74,46,23,75,47],[12,75,47,26,76,48],[6,75,47,34,76,48],[29,74,46,14,75,47],[13,74,46,32,75,47],[40,75,47,7,76,48],[18,75,47,31,76,48]]};
 const ALIGN=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]];
@@ -543,10 +552,86 @@ function qrMatrix(text, level) {
   return buildMatrix(version, level, out, bestMask, false);
 }
 
+/* ---- SHA-256, reines JavaScript (kein secure context noetig) ---- */
+const K256 = new Uint32Array([
+  0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+  0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+  0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+  0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+  0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+  0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+  0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+  0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2]);
+
+function sha256(msg) {
+  const len = msg.length;
+  const bitLen = len * 8;
+  const withPad = Math.ceil((len + 9) / 64) * 64;
+  const m = new Uint8Array(withPad);
+  m.set(msg, 0);
+  m[len] = 0x80;
+  const dv = new DataView(m.buffer);
+  dv.setUint32(withPad - 8, Math.floor(bitLen / 0x100000000));
+  dv.setUint32(withPad - 4, bitLen >>> 0);
+
+  let h0 = 0x6a09e667, h1 = 0xbb67ae85, h2 = 0x3c6ef372, h3 = 0xa54ff53a,
+      h4 = 0x510e527f, h5 = 0x9b05688c, h6 = 0x1f83d9ab, h7 = 0x5be0cd19;
+  const w = new Uint32Array(64);
+
+  for (let off = 0; off < withPad; off += 64) {
+    for (let i = 0; i < 16; i++) w[i] = dv.getUint32(off + i * 4);
+    for (let i = 16; i < 64; i++) {
+      const a = w[i - 15], b = w[i - 2];
+      const s0 = ((a >>> 7) | (a << 25)) ^ ((a >>> 18) | (a << 14)) ^ (a >>> 3);
+      const s1 = ((b >>> 17) | (b << 15)) ^ ((b >>> 19) | (b << 13)) ^ (b >>> 10);
+      w[i] = (w[i - 16] + s0 + w[i - 7] + s1) >>> 0;
+    }
+    let a = h0, b = h1, c = h2, d = h3, e = h4, f = h5, g = h6, h = h7;
+    for (let i = 0; i < 64; i++) {
+      const S1 = ((e >>> 6) | (e << 26)) ^ ((e >>> 11) | (e << 21)) ^ ((e >>> 25) | (e << 7));
+      const ch = (e & f) ^ (~e & g);
+      const t1 = (h + S1 + ch + K256[i] + w[i]) >>> 0;
+      const S0 = ((a >>> 2) | (a << 30)) ^ ((a >>> 13) | (a << 19)) ^ ((a >>> 22) | (a << 10));
+      const mj = (a & b) ^ (a & c) ^ (b & c);
+      const t2 = (S0 + mj) >>> 0;
+      h = g; g = f; f = e; e = (d + t1) >>> 0;
+      d = c; c = b; b = a; a = (t1 + t2) >>> 0;
+    }
+    h0 = (h0 + a) >>> 0; h1 = (h1 + b) >>> 0; h2 = (h2 + c) >>> 0; h3 = (h3 + d) >>> 0;
+    h4 = (h4 + e) >>> 0; h5 = (h5 + f) >>> 0; h6 = (h6 + g) >>> 0; h7 = (h7 + h) >>> 0;
+  }
+  const out = new Uint8Array(32), odv = new DataView(out.buffer);
+  [h0, h1, h2, h3, h4, h5, h6, h7].forEach((v, i) => odv.setUint32(i * 4, v));
+  return out;
+}
+
+/* Passwort langsam ableiten: viele Runden, damit Durchprobieren teuer wird */
+const PW_ITER = 120000;
+function derivePw(pw, salt) {
+  const enc = new TextEncoder();
+  let h = sha256(enc.encode(salt + '\u0000' + pw));
+  const buf = new Uint8Array(36);
+  for (let i = 1; i < PW_ITER; i++) {
+    buf.set(h, 0);
+    buf[32] = i & 255; buf[33] = (i >>> 8) & 255; buf[34] = (i >>> 16) & 255; buf[35] = (i >>> 24) & 255;
+    h = sha256(buf);
+  }
+  let s = '';
+  for (let i = 0; i < 16; i++) s += String.fromCharCode(h[i]);
+  return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+function newSalt() {
+  const a = new Uint8Array(6);
+  if (typeof crypto !== 'undefined' && crypto.getRandomValues) crypto.getRandomValues(a);
+  else for (let i = 0; i < 6; i++) a[i] = Math.floor(Math.random() * 256);
+  return Array.from(a).map(x => x.toString(16).padStart(2, '0')).join('');
+}
+
 /* ================= Turnierlogik ================= */
 
 const DEFAULTS = {
   club: 'STV Uerkheim',
+  pwSalt: '', pwHash: '',
   title: 'Beachvolleyball-Turnier',
   date: '',
   base: '',
@@ -759,6 +844,22 @@ let SNAP = false;        // Snapshot aus dem Link, keine Synchronisation
 let view = 'jetzt';
 let openSheet = null;
 
+const UNLOCK = 'bvt13:unlock';
+let memUnlock = '';
+function isUnlocked() {
+  if (!st.pwHash) return true;
+  try { if (sessionStorage.getItem(UNLOCK) === st.pwHash) return true; } catch (e) { /* egal */ }
+  try { if (localStorage.getItem(UNLOCK) === st.pwHash) return true; } catch (e) { /* egal */ }
+  return memUnlock === st.pwHash;
+}
+function setUnlocked(on, remember) {
+  memUnlock = on ? st.pwHash : '';
+  try { sessionStorage.removeItem(UNLOCK); } catch (e) { /* egal */ }
+  try { localStorage.removeItem(UNLOCK); } catch (e) { /* egal */ }
+  if (!on) return;
+  try { (remember ? localStorage : sessionStorage).setItem(UNLOCK, st.pwHash); } catch (e) { /* egal */ }
+}
+
 const Store = {
   mode: 'memory', mem: null,
   detect() {
@@ -834,7 +935,7 @@ function encodeState(s) {
     s.rA.map(r => r ? p2(r[0]) + p2(r[1]) : '----').join(''),
     s.rB.map(r => r ? p2(r[0]) + p2(r[1]) : '----').join(''),
     s.rF.map(m => m.map(x => x ? p2(x[0]) + p2(x[1]) : '----').join('')).join('|'),
-    String(s.ts || 0), s.club,
+    String(s.ts || 0), s.club, s.pwSalt || '', s.pwHash || '',
   ];
   return b64e(L.join('\n'));
 }
@@ -859,6 +960,7 @@ function decodeState(code) {
     rA: pull(L[6], 15), rB: pull(L[7], 21),
     rF: L[8].split('|').map(m => pull(m, 3)),
     ts: Number(L[9] || 0), club: L[10] === undefined ? DEFAULTS.club : L[10],
+    pwSalt: L[11] || '', pwHash: L[12] || '',
   });
 }
 
@@ -1075,6 +1177,25 @@ function viewSetup() {
       ${st.teamsB.map((t, i) => `<div class="fld name"><label for="tb${i}"><span class="code">B${i + 1}</span></label>
         <input id="tb${i}" data-team="B${i}" type="text" value="${esc(t)}"></div>`).join('')}
     </div></section>
+  <section><div class="hd"><h2>Bearbeitung schützen</h2>
+      <span class="note">${st.pwHash ? 'Passwort gesetzt' : 'kein Passwort'}</span></div>
+    ${st.pwHash ? `<div class="info">Die Seite startet auf diesem und auf allen anderen Geräten im
+        Lesemodus. Zum Bearbeiten wird das Passwort verlangt.</div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn ghost sm" id="btnPwChange">Passwort ändern</button>
+        <button class="btn ghost sm" id="btnPwOff">Schutz entfernen</button>
+      </div>`
+    : `<div class="grid">
+        <div class="fld"><label for="pwNew">Neues Passwort</label>
+          <input id="pwNew" type="password" autocomplete="new-password"></div>
+        <div class="fld"><label for="pwNew2">Wiederholen</label>
+          <input id="pwNew2" type="password" autocomplete="new-password"></div>
+      </div>
+      <div class="row" style="margin-top:10px"><button class="btn sm" id="btnPwOn">Passwort setzen</button></div>`}
+    <p class="muted" style="margin-top:8px"><small>Der Schutz verhindert versehentliches Umschalten.
+      Wer sich auskennt, umgeht ihn im Browser – die Seite läuft vollständig auf dem Gerät.
+      Wähle trotzdem kein triviales Passwort.</small></p>
+  </section>
   <section><div class="hd"><h2>Daten</h2></div>
     <div class="row">
       <button class="btn ghost sm" id="btnExport">Sicherung herunterladen</button>
@@ -1204,6 +1325,52 @@ function closeSheet() {
   document.removeEventListener('keydown', escClose);
 }
 
+function askPassword() {
+  const host = document.createElement('div');
+  host.innerHTML = `<div class="back" id="back"><div class="sheet" role="dialog" aria-modal="true"
+      aria-label="Bearbeiten freischalten">
+    <h3>Bearbeiten freischalten</h3>
+    <div class="src">Passwort der Turnierleitung</div>
+    <div class="pwrow"><input id="pwIn" type="password" autocomplete="current-password"
+      aria-label="Passwort" placeholder="Passwort"></div>
+    <label class="check"><input type="checkbox" id="pwRem" checked> Auf diesem Gerät merken</label>
+    <p id="pwMsg" class="pwmsg" role="alert"></p>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="pwOk">Freischalten</button>
+      <button class="btn ghost" id="pwCancel">Abbrechen</button>
+    </div>
+    <p class="muted" style="margin-top:10px"><small>Der Schutz verhindert versehentliches Umschalten.
+      Er ist kein Zugriffsschutz – die Seite läuft vollständig im Browser.</small></p>
+  </div></div>`;
+  document.body.appendChild(host.firstElementChild);
+  const el = $('#back');
+  openSheet = { pw: true };
+  const inp = $('#pwIn');
+  inp.focus();
+  const close = () => { el.remove(); openSheet = null; document.removeEventListener('keydown', escPw); };
+  const escPw = e => { if (e.key === 'Escape') close(); };
+  document.addEventListener('keydown', escPw);
+  el.addEventListener('click', e => { if (e.target === el) close(); });
+  $('#pwCancel').onclick = close;
+  const submit = () => {
+    const btn = $('#pwOk');
+    btn.textContent = 'Prüfe …';
+    setTimeout(() => {
+      const ok = derivePw(inp.value, st.pwSalt) === st.pwHash;
+      if (!ok) {
+        btn.textContent = 'Freischalten';
+        $('#pwMsg').textContent = 'Passwort stimmt nicht.';
+        inp.select();
+        return;
+      }
+      setUnlocked(true, $('#pwRem').checked);
+      close(); RO = false; render();
+    }, 30);
+  };
+  $('#pwOk').onclick = submit;
+  inp.onkeydown = e => { if (e.key === 'Enter') submit(); };
+}
+
 /* ================= Rendern ================= */
 const TABS = [
   ['jetzt', 'Jetzt'], ['A', 'Gruppe A'], ['B', 'Gruppe B'],
@@ -1227,7 +1394,8 @@ function render() {
   $('#syncChip').textContent = syncTxt;
   $('#syncChip').className = 'chip' + (Store.mode === 'memory' && !SNAP ? ' warn' : '');
   $('#modeChip').innerHTML = RO
-    ? '<button type="button" id="toEdit" title="Auf Bearbeiten umschalten">Nur lesen ⇄</button>'
+    ? '<button type="button" id="toEdit" title="Auf Bearbeiten umschalten">Nur lesen '
+      + (st.pwHash ? '&#128274;' : '⇄') + '</button>'
     : '<button type="button" id="toRead" title="Auf Nur lesen umschalten">Bearbeiten ⇄</button>';
   $('#modeChip').className = 'chip' + (RO ? '' : ' edit');
 
@@ -1248,8 +1416,11 @@ function render() {
   $('#nav').querySelectorAll('[data-tab]').forEach(b =>
     b.onclick = () => { view = b.dataset.tab; render(); window.scrollTo(0, 0); });
   const te = $('#toEdit'), tr = $('#toRead');
-  if (te) te.onclick = () => { RO = false; render(); };
-  if (tr) tr.onclick = () => { RO = true; render(); };
+  if (te) te.onclick = () => {
+    if (st.pwHash && !isUnlocked()) { askPassword(); return; }
+    RO = false; render();
+  };
+  if (tr) tr.onclick = () => { setUnlocked(false); RO = true; render(); };
 
   $('#main').querySelectorAll('[data-edit]').forEach(b => b.onclick = () => {
     const v = b.dataset.edit;
@@ -1306,9 +1477,36 @@ function wireSetup() {
     inp.value = v;
     (g === 'A' ? st.teamsA : st.teamsB)[i] = v; save();
   });
+  const setPw = (val) => {
+    const salt = newSalt();
+    st.pwSalt = salt; st.pwHash = derivePw(val, salt);
+    setUnlocked(true, true); save(true);
+  };
+  const on = $('#btnPwOn');
+  if (on) on.onclick = () => {
+    const a = $('#pwNew').value, b = $('#pwNew2').value;
+    if (a.length < 4) { flash('Bitte mindestens vier Zeichen'); return; }
+    if (a !== b) { flash('Die beiden Eingaben stimmen nicht überein'); return; }
+    on.textContent = 'Setze …';
+    setTimeout(() => { setPw(a); flash('Passwort gesetzt'); }, 30);
+  };
+  const ch = $('#btnPwChange');
+  if (ch) ch.onclick = () => {
+    const v = prompt('Neues Passwort (mindestens vier Zeichen):');
+    if (v === null) return;
+    if (v.length < 4) { flash('Bitte mindestens vier Zeichen'); return; }
+    setPw(v); flash('Passwort geändert');
+  };
+  const off = $('#btnPwOff');
+  if (off) off.onclick = () => {
+    if (!confirm('Schutz wirklich entfernen? Danach kann jeder in den Bearbeitungsmodus wechseln.')) return;
+    setUnlocked(false); st.pwSalt = ''; st.pwHash = ''; save(true); flash('Schutz entfernt');
+  };
   const ex = $('#btnExport');
   if (ex) ex.onclick = () => {
-    const blob = new Blob([JSON.stringify(st, null, 2)], { type: 'application/json' });
+    const copy = Object.assign({}, st);
+    delete copy.pwSalt; delete copy.pwHash;   // Sicherung sperrt niemanden aus
+    const blob = new Blob([JSON.stringify(copy, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = 'turnier-sicherung.json'; a.click();
@@ -1347,9 +1545,11 @@ async function boot() {
     if (raw) st = merge(raw);
     if (hash === '#v') RO = true;
   }
+  // Mit gesetztem Passwort startet die Seite gesperrt, bis freigeschaltet wird
+  if (st.pwHash && !isUnlocked()) RO = true;
   render();
   window.addEventListener('resize', syncNavTop);
-  setInterval(() => { if (!busy()) render(); }, 30000);
+  setInterval(() => { if (!busy()) render(); }, 30000);   // Uhrzeit / «läuft jetzt»
   // Zweites Fenster desselben Browsers nachziehen (z. B. QR-Anzeige auf dem Zweitschirm)
   if (!SNAP && Store.mode === 'local') {
     window.addEventListener('storage', e => {
@@ -1359,7 +1559,7 @@ async function boot() {
         if (raw && (raw.ts || 0) > (st.ts || 0)) { st = merge(raw); render(); }
       } catch (err) { /* unlesbar, ignorieren */ }
     });
-  }   // Uhrzeit / «läuft jetzt»
+  }
   if (!SNAP && Store.mode === 'shared') {
     setInterval(async () => {
       if (busy()) return;
